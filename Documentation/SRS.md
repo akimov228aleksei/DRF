@@ -14,15 +14,20 @@ Frontend - visual display of content.
 
 **Application should provide:** 
 
-    - Storing information about the employee's salary
-    
-    - Show employee list
-   
+  
     - Show list of departments
+
+    - Show detailed information about the department
+
+    - Updating the list of departments (adding, deleting, editing). This operation is not available to all users.
    
-    - Updating the list of employees (adding, deleting, editing)
+    - Show list of employees 
+
+    - Show detailed information about an employee
+
+    - Updating the list of employees (adding, deleting, editing). This operation is not available to all users.
     
-    - Show which department the employee belongs to
+    - Employee vacation management
 
 
 #### 1. Department 
