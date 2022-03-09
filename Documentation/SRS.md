@@ -1,46 +1,51 @@
-# Employee management
-
-#### Vision
-
-Employee Management is a web based 
-application for managing employees,
-departments and vacation.
-
-The application consists of two parts: frontend and backend.
-
-Backend - API that processes requests and works with the database.
-
-Frontend - visual display of content.
-
-**Application should provide:** 
-
-  
-    - Show list of departments
-
-    - Show detailed information about the department
-
-    - Updating the list of departments (adding, deleting, editing). This operation is not available to all users.
-   
-    - Show list of employees 
-
-    - Show detailed information about an employee
-
-    - Updating the list of employees (adding, deleting, editing). This operation is not available to all users.
+- # Introduction 
     
-    - Employee vacation management
+    #### Purpose
+        Employee Management is a web based 
+        application for managing employees,
+        departments and vacation.
 
+    #### Document conventions
+        DRF - django rest framework.
+        API - Application Programming Interface.
 
-#### 1. Department 
+- # Overall Description 
+    
+    #### Product features
+      - Show list of departments.
 
-This mode is intended for viewing the list of departments, description, creation date, update date.
+      - Show detailed information about the department.
 
+      - Updating the list of departments (adding, deleting, editing). This operation is not available to all users.
+   
+      - Show list of employees. 
 
-#### 2. Employees 
+      - Show detailed information about an employee.
 
-The mode is intended for displaying the list of employees, their salaries, department, job assignment and position
+      - Updating the list of employees (adding, deleting, editing). This operation is not available to all users.
+    
+      - Employee vacation management
+    
+    #### Operating environment
+        Python - v3.9
+        Ubuntu - v20.04
+        Postgres - v14.2
 
+- # External interface requirements
+    #### User interfaces: 
+        The user will interact with the application through a graphical interface. The user will have access to 3 sections: employees, departments, vacations.
+        Department: This mode is intended for viewing the list of departments, description, creation date, update date.
+        Employee: The mode is intended for displaying the list of employees, their salaries, department, job assignment and position.
+        Vacation: This mode is intended for viewing employees on vacation, deleting and editing the vacation date.
+        
+    #### Communication interfaces
+        There is an API for communication in the application. By sending requests to the API, third-party applications can receive various data.
 
-#### 3. Vacation
+- # Non functional requirements 
+    #### Software quality attributes
+        To check the quality of the code, use:
+         - Unit tests and integration tests
+         - Coverage  
+         - Linters 
 
-This mode is intended for viewing employees on vacation, deleting and editing the vacation date
 
