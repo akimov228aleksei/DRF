@@ -46,7 +46,7 @@
        Vacation: This mode is intended for viewing employees on vacation, deleting and editing the vacation date.
   
        An exemplary representation of the interface is shown in the figure:
-       ![](https://i.imgur.com/vzYIPyL.png)
+       ![](https://i.imgur.com/Wv89eIO.png)
                
     + ## Communication interfaces
         There is an API for communication in the application. By sending requests to the API, third-party applications can receive various data. The application uses the API to get data from the database. The API allows you to query 3 tables: Department, Employee, Vacation. Also receive detailed information on these departments, if the user has the rights to do so. The general scheme of interaction is shown in the figure:
