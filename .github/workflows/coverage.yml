@@ -22,6 +22,7 @@ jobs:
           pip install -r requirements.txt
       - name: Run coverage
         run: |
+          cd src
           python management/manage.py migrate
           coverage run --source='management' management/manage.py test management
           coveralls --service=github
