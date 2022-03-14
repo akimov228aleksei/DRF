@@ -1,3 +1,7 @@
-# from django.flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statisticstest import TestCase
+from django.test import TestCase
 
-# Create your tests here.
+
+class PassTest(TestCase):
+
+    def test_pass(self):
+        pass
