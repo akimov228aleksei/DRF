@@ -2,7 +2,11 @@
 omit =
         *__init__*
         *tests*
-        *migrations*
         *urls*
         *admin*
         *apps*
+        *settings*
+        *wsgi.py*
+        *asgi.py*
+        *migrations*
+        management/manage.py

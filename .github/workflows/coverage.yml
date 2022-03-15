@@ -1,4 +1,4 @@
-name: Python-package
+name: Coverage
 
 on: [push]
 
@@ -24,7 +24,7 @@ jobs:
         run: |
           cd src
           python management/manage.py migrate
-          coverage run --source='management' management/manage.py test management
+          coverage run --source=management management/manage.py test management
           coveralls --service=github
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
