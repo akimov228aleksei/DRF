@@ -1,6 +1,8 @@
 from django.contrib import admin
-from backend.models.department import Department, Employee
+from backend.models import department, employee, position, vacation
 # Register your models here.
 
-admin.site.register(Department)
-admin.site.register(Employee)
+admin.site.register(department.Department)
+admin.site.register(employee.Employee)
+admin.site.register(employee.Position)
+admin.site.register(vacation.Vacation)

@@ -1,16 +1,17 @@
 from django.db import models
 from .department import Department
-from datetime import date
+from .position import Position
+from django.utils.timezone import now
 
 
 class Employee(models.Model):
-    first_name = models.Charfield(max_lenght=100)
-    second_name = models.CharField(max_lenght=100)
+    first_name = models.CharField(max_length=100)
+    second_name = models.CharField(max_length=100)
     birthday = models.DateField()
-    department = models.ForeignKey(Department, on_delete=models.CASCADE)
-    position = models.ForeignKey(Position, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, null=True, on_delete=models.SET_NULL)
+    position = models.ForeignKey(Position, null=True, on_delete=models.SET_NULL)
     salary = models.PositiveIntegerField()
-    on_boarding_day = models.DateField(default=date.today())
+    on_boarding_day = models.DateField(default=now)
 
     def __str__(self):
         return self.first_name
