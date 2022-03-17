@@ -5,6 +5,8 @@ from django.utils.timezone import now
 
 
 class Employee(models.Model):
+    """Class containing fields and methods of the model"""
+
     first_name = models.CharField(max_length=100)
     second_name = models.CharField(max_length=100)
     birthday = models.DateField()

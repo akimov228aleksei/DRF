@@ -5,6 +5,8 @@ from django.utils.timezone import now
 
 
 class Vacation(models.Model):
+    """Class containing fields and methods of the model"""
+
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     start_date = models.DateField(default=now)
     end_date = models.DateField(default=now)
