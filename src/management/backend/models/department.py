@@ -10,7 +10,7 @@ class Department(models.Model):
     time_update = models.DateTimeField(auto_now=True)
 
     @property
-    def amount(self):
+    def total_count_employee(self):
         """A function that counts the number of employees in each department"""
 
         from .employee import Employee
