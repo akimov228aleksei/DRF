@@ -1,5 +1,4 @@
 from django.db import models
-from .department import Department
 from .position import Position
 from django.utils.timezone import now
 
@@ -10,7 +9,7 @@ class Employee(models.Model):
     first_name = models.CharField(max_length=100)
     second_name = models.CharField(max_length=100)
     birthday = models.DateField()
-    department = models.ForeignKey(Department, null=True, on_delete=models.SET_NULL)
+    department = models.ForeignKey('Department', null=True, on_delete=models.SET_NULL)
     position = models.ForeignKey(Position, null=True, on_delete=models.SET_NULL)
     salary = models.PositiveIntegerField()
     on_boarding_day = models.DateField(default=now)
