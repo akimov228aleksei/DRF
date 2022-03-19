@@ -1,5 +1,6 @@
 from django.db import models
 from .employee import Employee
+from django.db.models import Count, Avg
 
 
 class Department(models.Model):
@@ -14,16 +15,17 @@ class Department(models.Model):
     def total_count_employee(self):
         """A function that counts the number of employees in each department"""
 
-        return len(Employee.objects.filter(department=self.pk))
+        count = Employee.objects.values('department_id').annotate(employee=Count('id')).filter(department_id=self.pk)
+
+        return count[0]['employee'] if count else 0
 
     @property
     def average_salary(self):
         """A function that calculates the average salary of each department"""
 
-        employee = Employee.objects.filter(department=self.pk)
-        if employee:
-            return round(sum([i.salary for i in employee]) / len(employee))
-        return 0
+        salary = Employee.objects.values('department_id').annotate(salary=Avg('salary')).filter(department_id=self.pk)
+
+        return salary[0]['salary'] if salary else 0
 
     def __str__(self):
         return self.title
