@@ -15,9 +15,9 @@ class Department(models.Model):
     def total_count_employee(self):
         """A function that counts the number of employees in each department"""
 
-        count = Employee.objects.values('department_id').annotate(employee=Count('id')).filter(department_id=self.pk)
+        count = Department.objects.annotate(Count('employee')).filter(pk=self.pk)
 
-        return count[0]['employee'] if count else 0
+        return count[0].employee__count
 
     @property
     def average_salary(self):
