@@ -24,6 +24,7 @@ class Department(models.Model):
         salary = Employee.objects.values('department_id').annotate(salary=Avg('salary')).filter(department_id=self.pk)
 
         return salary[0]['salary'] if salary else 0
+        # TODO: Fix request
 
     def __str__(self):
         return self.title
