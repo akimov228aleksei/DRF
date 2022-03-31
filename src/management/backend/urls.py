@@ -1,12 +1,11 @@
 from django.urls import path, include
+from rest_framework.routers import SimpleRouter
 from .views import department
+from .views.department import DepartmentViewSet
 
+router = SimpleRouter()
+router.register(r'department', DepartmentViewSet, basename='department')
 
 urlpatterns = [
-    # path('drf-auth', include('rest_framework.urls')),
-    path('departmentlist/', department.DepartmentViewSet.as_view({'get': 'list',
-                                                                  'post':'create'})),
-    path('departmentdetail/<int:pk>', department.DepartmentViewSet.as_view({'get': 'retrieve',
-                                                                            'put': 'update',
-                                                                            'delete': 'destroy'})),
+    path('', include(router.urls)),
 ]
