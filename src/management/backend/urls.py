@@ -4,6 +4,9 @@ from .views import department
 
 urlpatterns = [
     # path('drf-auth', include('rest_framework.urls')),
-    path('departmentlist/', department.DepartmentView.as_view()),
-    path('departmentdetail/<int:pk>', department.DepartmentView.as_view()),
+    path('departmentlist/', department.DepartmentViewSet.as_view({'get': 'list',
+                                                                  'post':'create'})),
+    path('departmentdetail/<int:pk>', department.DepartmentViewSet.as_view({'get': 'retrieve',
+                                                                            'put': 'update',
+                                                                            'delete': 'destroy'})),
 ]
