@@ -14,8 +14,8 @@ class EmployeeViewSet(ViewSet):
 
     def retrieve(self, request, pk=None):
         queryset = Employee.objects.all()
-        department = get_object_or_404(queryset, pk=pk)
-        serializer = EmployeeDetailSerializer(department)
+        employee = get_object_or_404(queryset, pk=pk)
+        serializer = EmployeeDetailSerializer(employee)
         return Response(serializer.data)
 
     def create(self, request):
@@ -26,15 +26,15 @@ class EmployeeViewSet(ViewSet):
 
     def update(self, request, pk=None):
         queryset = Employee.objects.all()
-        department = get_object_or_404(queryset, pk=pk)
-        serializer = EmployeeSerializer(data=request.data, instance=department)
+        employee = get_object_or_404(queryset, pk=pk)
+        serializer = EmployeeSerializer(data=request.data, instance=employee)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
 
     def destroy(self, request, pk=None):
         queryset = Employee.objects.all()
-        department = get_object_or_404(queryset, pk=pk)
-        serializer = EmployeeSerializer(instance=department)
-        department.delete()
+        employee = get_object_or_404(queryset, pk=pk)
+        serializer = EmployeeSerializer(instance=employee)
+        employee.delete()
         return Response(serializer.data)

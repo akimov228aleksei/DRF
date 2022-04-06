@@ -14,8 +14,8 @@ class PositionViewSet(ViewSet):
 
     def retrieve(self, request, pk=None):
         queryset = Position.objects.all()
-        department = get_object_or_404(queryset, pk=pk)
-        serializer = PositionSerializer(department)
+        position  = get_object_or_404(queryset, pk=pk)
+        serializer = PositionSerializer(position)
         return Response(serializer.data)
 
     def create(self, request):
@@ -26,15 +26,15 @@ class PositionViewSet(ViewSet):
 
     def update(self, request, pk=None):
         queryset = Position.objects.all()
-        department = get_object_or_404(queryset, pk=pk)
-        serializer = PositionSerializer(data=request.data, instance=department)
+        position = get_object_or_404(queryset, pk=pk)
+        serializer = PositionSerializer(data=request.data, instance=position)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
 
     def destroy(self, request, pk=None):
         queryset = Position.objects.all()
-        department = get_object_or_404(queryset, pk=pk)
-        serializer = PositionSerializer(instance=department)
-        department.delete()
+        position = get_object_or_404(queryset, pk=pk)
+        serializer = PositionSerializer(instance=position)
+        position.delete()
         return Response(serializer.data)
