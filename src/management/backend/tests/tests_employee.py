@@ -90,7 +90,7 @@ class TestEmployeeViewsAPI(TestCase):
                                    data=json.dumps(valid_data),
                                    content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data, {'id': 2,
+        self.assertEqual(response.data, {'id': 1,
                                          'first_name': 'Petr',
                                          'second_name': 'Petrov',
                                          'birthday': '2000-01-01',
