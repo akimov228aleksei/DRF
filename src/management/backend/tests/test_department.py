@@ -13,9 +13,6 @@ class TestDepartmentViewsAPI(TestCase):
     def setUp(self):
         self.department = Department.objects.create(title='Some department_first',
                                                     description='Description about dep_first')
-        Department.objects.create(title='Some department_second',
-                                  description='Description about dep_second')
-
         self.client = Client()
 
     def test_get_list(self):
