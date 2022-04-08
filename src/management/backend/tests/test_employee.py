@@ -5,14 +5,14 @@ from ..models.employee import Employee
 from ..models.department import Department
 from django.urls import reverse
 import json
+import datetime
 
 from ..models.position import Position
 from ..serializers.employee import EmployeeSerializer, EmployeeDetailSerializer
-from django.utils.timezone import now
+
 
 
 class TestEmployeeViewsAPI(TestCase):
-
     def setUp(self):
         self.department = Department.objects.create(title='Some department_first',
                                                     description='Description about dep_first')
@@ -47,53 +47,71 @@ class TestEmployeeViewsAPI(TestCase):
         valid_data = {
            'first_name': 'Ivan',
            'second_name': 'Ivanov',
-           'birthday': '2000_20_02',
-           'department_id': '2',
-           'position_id': '2',
-           'salary': '2000'}
+           'birthday': '2000-01-01',
+           'department': self.department.pk,
+           'position': self.position.pk,
+           'salary': 2000}
 
         response = self.client.post(reverse('employee-list'),
                                     data=json.dumps(valid_data),
                                     content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        print(response.data)
-        self.assertEqual(response.data, {'id': response.data['id'],
-                                         'title': 'Some department',
-                                         'description': 'Description about some department'})
+        self.assertEqual(response.data, {'id': 2,
+                                         'first_name': 'Ivan',
+                                         'second_name': 'Ivanov',
+                                         'birthday': '2000-01-01',
+                                         'department': self.department.pk,
+                                         'position': self.position.pk,
+                                         'salary': 2000,
+                                         'on_boarding_day': f'{datetime.date.today()}'})
 
-    # def test_create_invalid_data(self):
-    #     valid_data = {
-    #         'title': '',
-    #         'description': ''
-    #     }
-    #     response = self.client.post(reverse('department-list'),
-    #                                 data=json.dumps(valid_data),
-    #                                 content_type='application/json')
-    #     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-    #
-    # def test_update_valid_data(self):
-    #     valid_data = {
-    #         'title': 'Some department',
-    #         'description': 'Description about some department'
-    #     }
-    #     response = self.client.put(reverse('department-detail', kwargs={'pk': self.department.pk}),
-    #                                data=json.dumps(valid_data),
-    #                                content_type='application/json')
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-    #     self.assertEqual(response.data, {'id': response.data['id'],
-    #                                      'title': 'Some department',
-    #                                      'description': 'Description about some department'})
-    #
-    # def test_update_invalid_data(self):
-    #     valid_data = {
-    #         'title': '',
-    #         'description': ''
-    #     }
-    #     response = self.client.put(reverse('department-detail', kwargs={'pk': self.department.pk}),
-    #                                data=json.dumps(valid_data),
-    #                                content_type='application/json')
-    #     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-    #
-    # def test_delete_valid_data(self):
-    #     response = self.client.delete(reverse('department-detail', kwargs={'pk': self.department.pk}))
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
+    def test_create_invalid_data(self):
+        invalid_data = {
+           'first_name': '',
+           'second_name': '',
+           'birthday': '',
+           'department': '',
+           'position': '',
+           'salary': ''}
+        response = self.client.post(reverse('department-list'),
+                                    data=json.dumps(invalid_data),
+                                    content_type='application/json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_update_valid_data(self):
+        valid_data = {
+            'first_name': 'Petr',
+            'second_name': 'Petrov',
+            'birthday': '2000-01-01',
+            'department': self.department.pk,
+            'position': self.position.pk,
+            'salary': 1000}
+        response = self.client.put(reverse('employee-detail', kwargs={'pk': self.employee.pk}),
+                                   data=json.dumps(valid_data),
+                                   content_type='application/json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, {'id': 2,
+                                         'first_name': 'Petr',
+                                         'second_name': 'Petrov',
+                                         'birthday': '2000-01-01',
+                                         'department': self.department.pk,
+                                         'position': self.position.pk,
+                                         'salary': 1000,
+                                         'on_boarding_day': f'{datetime.date.today()}'})
+
+    def test_update_invalid_data(self):
+        invalid_data = {
+            'first_name': '',
+            'second_name': '',
+            'birthday': '',
+            'department': '',
+            'position': '',
+            'salary': ''}
+        response = self.client.put(reverse('employee-detail', kwargs={'pk': self.employee.pk}),
+                                   data=json.dumps(invalid_data),
+                                   content_type='application/json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_delete_valid_data(self):
+        response = self.client.delete(reverse('employee-detail', kwargs={'pk': self.employee.pk}))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

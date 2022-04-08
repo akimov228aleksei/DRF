@@ -41,17 +41,17 @@ class TestDepartmentViewsAPI(TestCase):
                                     data=json.dumps(valid_data),
                                     content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data, {'id': response.data['id'],
+        self.assertEqual(response.data, {'id': 2,
                                          'title': 'Some department',
                                          'description': 'Description about some department'})
 
     def test_create_invalid_data(self):
-        valid_data = {
+        ivalid_data = {
             'title': '',
             'description': ''
         }
         response = self.client.post(reverse('department-list'),
-                                    data=json.dumps(valid_data),
+                                    data=json.dumps(ivalid_data),
                                     content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
@@ -64,17 +64,17 @@ class TestDepartmentViewsAPI(TestCase):
                                    data=json.dumps(valid_data),
                                    content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data, {'id': response.data['id'],
+        self.assertEqual(response.data, {'id': self.department.pk,
                                          'title': 'Some department',
                                          'description': 'Description about some department'})
 
     def test_update_invalid_data(self):
-        valid_data = {
+        invalid_data = {
             'title': '',
             'description': ''
         }
         response = self.client.put(reverse('department-detail', kwargs={'pk': self.department.pk}),
-                                   data=json.dumps(valid_data),
+                                   data=json.dumps(invalid_data),
                                    content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
