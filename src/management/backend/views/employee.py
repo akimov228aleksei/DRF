@@ -23,7 +23,7 @@ class EmployeeViewSet(ViewSet):
 
     def create(self, request):
         """The method creates a new record"""
-        serializer = EmployeeSerializer(data=request.data)
+        serializer = EmployeeDetailSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
@@ -32,7 +32,7 @@ class EmployeeViewSet(ViewSet):
         """The method updates a specific record"""
         queryset = Employee.objects.all()
         employee = get_object_or_404(queryset, pk=pk)
-        serializer = EmployeeSerializer(data=request.data, instance=employee)
+        serializer = EmployeeDetailSerializer(data=request.data, instance=employee)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
@@ -41,6 +41,6 @@ class EmployeeViewSet(ViewSet):
         """The method deletes a specific entry"""
         queryset = Employee.objects.all()
         employee = get_object_or_404(queryset, pk=pk)
-        serializer = EmployeeSerializer(instance=employee)
+        serializer = EmployeeDetailSerializer(instance=employee)
         employee.delete()
         return Response(serializer.data)
