@@ -149,19 +149,29 @@ class TestEmployeeViewsAPI(TestCase):
                                    content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-        response = self.client.put(reverse('employee-detail', kwargs={'pk': None}))
+        response = self.client.put(reverse('employee-detail', kwargs={'pk': None}),
+                                   data=json.dumps(invalid_data_2),
+                                   content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-        response = self.client.put(reverse('employee-detail', kwargs={'pk': -1}))
+        response = self.client.put(reverse('employee-detail', kwargs={'pk': -1}),
+                                   data=json.dumps(invalid_data_2),
+                                   content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-        response = self.client.put(reverse('employee-detail', kwargs={'pk': 0}))
+        response = self.client.put(reverse('employee-detail', kwargs={'pk': 0}),
+                                   data=json.dumps(invalid_data_2),
+                                   content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-        response = self.client.put(reverse('employee-detail', kwargs={'pk': 1000}))
+        response = self.client.put(reverse('employee-detail', kwargs={'pk': 1000}),
+                                   data=json.dumps(invalid_data_2),
+                                   content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-        response = self.client.put(reverse('employee-detail', kwargs={'pk': 'str'}))
+        response = self.client.put(reverse('employee-detail', kwargs={'pk': 'str'}),
+                                   data=json.dumps(invalid_data_2),
+                                   content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_delete_valid_data(self):
