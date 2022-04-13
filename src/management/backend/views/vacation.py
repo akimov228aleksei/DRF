@@ -1,12 +1,16 @@
 from rest_framework.generics import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import Response
 from rest_framework.viewsets import ViewSet
 from ..models.vacation import Vacation
 from ..serializers.vacation import VacationSerializer
+from ..permissions import IsAdminOrManagerOrReadOnly
 
 
 class VacationViewSet(ViewSet):
     """A class that describes all available methods with a vacation model"""
+
+    permission_classes = IsAdminOrManagerOrReadOnly, IsAuthenticated
 
     def list(self, request):
         """The method displays all records"""

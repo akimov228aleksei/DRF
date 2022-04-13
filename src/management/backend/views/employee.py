@@ -1,12 +1,16 @@
 from rest_framework.generics import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import Response
 from rest_framework.viewsets import ViewSet
 from ..models.employee import Employee
 from ..serializers.employee import EmployeeSerializer, EmployeeDetailSerializer
+from ..permissions import IsAdminOrManagerOrReadOnly
 
 
 class EmployeeViewSet(ViewSet):
     """A class that describes all available methods with a employee model"""
+
+    permission_classes = IsAdminOrManagerOrReadOnly, IsAuthenticated
 
     def list(self, request):
         """The method displays all records"""
