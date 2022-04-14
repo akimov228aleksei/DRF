@@ -1,5 +1,4 @@
 from django.db import models
-from .position import Position
 from datetime import date
 
 
@@ -10,7 +9,7 @@ class Employee(models.Model):
     second_name = models.CharField(max_length=100)
     birthday = models.DateField()
     department = models.ForeignKey('Department', null=True, on_delete=models.SET_NULL)
-    position = models.ForeignKey(Position, null=True, on_delete=models.SET_NULL)
+    position = models.ForeignKey('Position', null=True, on_delete=models.SET_NULL)
     salary = models.PositiveIntegerField()
     on_boarding_day = models.DateField(default=date.today)
 
