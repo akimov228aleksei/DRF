@@ -9,6 +9,25 @@ from ..serializers.department import DepartmentSerializer, DepartmentDetailSeria
 
 
 class TestDepartmentViewsAPI(TestCase):
+    valid_data = {
+        'title': 'Some department',
+        'description': 'Description about some department'
+    }
+
+    invalid_data = {
+        'title': '',
+        'description': ''
+    }
+
+    INVALID_PK_STRING = 'str'
+
+    INVALID_PK_LESS_THAN_ZERO = -1
+
+    INVALID_PK_MORE_THAN_ZERO = 1000
+
+    INVALID_PK_ZERO = 0
+
+    INVALID_PK_NONE = None
 
     def setUp(self):
         self.department = Department.objects.create(title='Some department_first',
@@ -23,34 +42,40 @@ class TestDepartmentViewsAPI(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_valid_detail_data(self):
-        response = self.client.get(reverse('department-detail', kwargs={'pk': self.department.pk}))
+        response = self.client.get(reverse('department-detail',
+                                           kwargs={'pk': self.department.pk}))
         serializer = DepartmentDetailSerializer(self.department)
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_get_invalid_detail_data(self):
-        response = self.client.get(reverse('department-detail', kwargs={'pk': None}))
+    def test_get_invalid_detail_data_pk_is_none(self):
+        response = self.client.get(reverse('department-detail',
+                                           kwargs={'pk': self.INVALID_PK_NONE}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-        response = self.client.get(reverse('department-detail', kwargs={'pk': 0}))
+    def test_get_invalid_detail_data_pk_is_zero(self):
+        response = self.client.get(reverse('department-detail',
+                                           kwargs={'pk': self.INVALID_PK_ZERO}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-        response = self.client.get(reverse('department-detail', kwargs={'pk': -1}))
+    def test_get_invalid_detail_data_pk_is_less_than_zero(self):
+        response = self.client.get(reverse('department-detail',
+                                           kwargs={'pk': self.INVALID_PK_LESS_THAN_ZERO}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-        response = self.client.get(reverse('department-detail', kwargs={'pk': 1000}))
+    def test_get_invalid_detail_data_pk_is_more_than_ultimate(self):
+        response = self.client.get(reverse('department-detail',
+                                           kwargs={'pk': self.INVALID_PK_MORE_THAN_ZERO}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-        response = self.client.get(reverse('department-detail', kwargs={'pk': 'str'}))
+    def test_get_invalid_detail_data_pk_is_string(self):
+        response = self.client.get(reverse('department-detail',
+                                           kwargs={'pk': self.INVALID_PK_STRING}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_create_valid_data(self):
-        valid_data = {
-            'title': 'Some department',
-            'description': 'Description about some department'
-        }
         response = self.client.post(reverse('department-list'),
-                                    data=json.dumps(valid_data),
+                                    data=json.dumps(self.valid_data),
                                     content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, {'id': 2,
@@ -58,23 +83,15 @@ class TestDepartmentViewsAPI(TestCase):
                                          'description': 'Description about some department'})
 
     def test_create_invalid_data(self):
-        invalid_data = {
-            'title': '',
-            'description': ''
-        }
-
         response = self.client.post(reverse('department-list'),
-                                    data=json.dumps(invalid_data),
+                                    data=json.dumps(self.invalid_data),
                                     content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_update_valid_data(self):
-        valid_data = {
-            'title': 'Some department',
-            'description': 'Description about some department'
-        }
-        response = self.client.put(reverse('department-detail', kwargs={'pk': self.department.pk}),
-                                   data=json.dumps(valid_data),
+        response = self.client.put(reverse('department-detail',
+                                           kwargs={'pk': self.department.pk}),
+                                   data=json.dumps(self.valid_data),
                                    content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, {'id': self.department.pk,
@@ -82,57 +99,73 @@ class TestDepartmentViewsAPI(TestCase):
                                          'description': 'Description about some department'})
 
     def test_update_invalid_data(self):
-        invalid_data = {
-            'title': '',
-            'description': ''
-        }
-
-        response = self.client.put(reverse('department-detail', kwargs={'pk': self.department.pk}),
-                                   data=json.dumps(invalid_data),
+        response = self.client.put(reverse('department-detail',
+                                           kwargs={'pk': self.department.pk}),
+                                   data=json.dumps(self.invalid_data),
                                    content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-        response = self.client.put(reverse('department-detail', kwargs={'pk': None}),
-                                   data=json.dumps(invalid_data),
+    def test_update_invalid_data_pk_is_none(self):
+        response = self.client.put(reverse('department-detail',
+                                           kwargs={'pk': self.INVALID_PK_NONE}),
+                                   data=json.dumps(self.invalid_data),
                                    content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-        response = self.client.put(reverse('department-detail', kwargs={'pk': 0}),
-                                   data=json.dumps(invalid_data),
+    def test_update_invalid_data_pk_is_zero(self):
+        response = self.client.put(reverse('department-detail',
+                                           kwargs={'pk': self.INVALID_PK_ZERO}),
+                                   data=json.dumps(self.invalid_data),
                                    content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-        response = self.client.put(reverse('department-detail', kwargs={'pk': -1}),
-                                   data=json.dumps(invalid_data),
+    def test_update_invalid_data_pk_is_less_than_zero(self):
+        response = self.client.put(reverse('department-detail',
+                                           kwargs={'pk': self.INVALID_PK_LESS_THAN_ZERO}),
+                                   data=json.dumps(self.invalid_data),
                                    content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-        response = self.client.put(reverse('department-detail', kwargs={'pk': 1000}),
-                                   data=json.dumps(invalid_data),
+    def test_update_invalid_data_pk_is_more_than_zero(self):
+        response = self.client.put(reverse('department-detail',
+                                           kwargs={'pk': self.INVALID_PK_MORE_THAN_ZERO}),
+                                   data=json.dumps(self.invalid_data),
                                    content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-        response = self.client.put(reverse('department-detail', kwargs={'pk': 'str'}),
-                                   data=json.dumps(invalid_data),
+    def test_update_invalid_data_pk_is_string(self):
+        response = self.client.put(reverse('department-detail',
+                                           kwargs={'pk': self.INVALID_PK_STRING}),
+                                   data=json.dumps(self.invalid_data),
                                    content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_delete_valid_data(self):
-        response = self.client.delete(reverse('department-detail', kwargs={'pk': self.department.pk}))
+        response = self.client.delete(reverse('department-detail',
+                                              kwargs={'pk': self.department.pk}))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_delete_invalid_data(self):
-        response = self.client.delete(reverse('department-detail', kwargs={'pk': None}))
+    def test_delete_invalid_data_pk_is_none(self):
+        response = self.client.delete(reverse('department-detail',
+                                              kwargs={'pk': self.INVALID_PK_NONE}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-        response = self.client.delete(reverse('department-detail', kwargs={'pk': 0}))
+    def test_delete_invalid_data_pk_is_zero(self):
+        response = self.client.delete(reverse('department-detail',
+                                              kwargs={'pk': self.INVALID_PK_ZERO}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-        response = self.client.delete(reverse('department-detail', kwargs={'pk': -1}))
+    def test_delete_invalid_data_pk_is_less_than_zero(self):
+        response = self.client.delete(reverse('department-detail',
+                                              kwargs={'pk': self.INVALID_PK_LESS_THAN_ZERO}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-        response = self.client.delete(reverse('department-detail', kwargs={'pk': 1000}))
+    def test_delete_invalid_data_pk_is_more_than_zero(self):
+        response = self.client.delete(reverse('department-detail',
+                                              kwargs={'pk': self.INVALID_PK_MORE_THAN_ZERO}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-        response = self.client.delete(reverse('department-detail', kwargs={'pk': 'str'}))
+    def test_delete_invalid_data_pk_is_string(self):
+        response = self.client.delete(reverse('department-detail',
+                                              kwargs={'pk': self.INVALID_PK_STRING}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
