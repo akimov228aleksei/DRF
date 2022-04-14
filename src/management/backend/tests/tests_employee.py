@@ -81,23 +81,27 @@ class TestEmployeeViewsAPI(TestCase):
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_get_invalid_detail_data(self):
+    def test_get_invalid_detail_data_pk_is_none(self):
         response = self.client.get(reverse('employee-detail',
                                            kwargs={'pk': self.INVALID_PK_NONE}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
+    def test_get_invalid_detail_data_pk_is_zero(self):
         response = self.client.get(reverse('employee-detail',
                                            kwargs={'pk': self.INVALID_PK_ZERO}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
+    def test_get_invalid_detail_data_pk_is_less_than_zero(self):
         response = self.client.get(reverse('employee-detail',
                                            kwargs={'pk': self.INVALID_PK_LESS_THAN_ZERO}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
+    def test_get_invalid_detail_data_pk_more_than_ultimate(self):
         response = self.client.get(reverse('employee-detail',
                                            kwargs={'pk': self.INVALID_PK_MORE_THAN_ULTIMATE}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
+    def test_get_invalid_detail_data_pk_is_string(self):
         response = self.client.get(reverse('employee-detail',
                                            kwargs={'pk': self.INVALID_PK_STRING}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
@@ -116,12 +120,13 @@ class TestEmployeeViewsAPI(TestCase):
                                          'salary': 2000,
                                          'on_boarding_day': f'{datetime.date.today()}'})
 
-    def test_create_invalid_data(self):
+    def test_create_invalid_data_1(self):
         response = self.client.post(reverse('department-list'),
                                     data=json.dumps(self.INVALID_DATA_1),
                                     content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+    def test_create_invalid_data_2(self):
         response = self.client.post(reverse('department-list'),
                                     data=json.dumps(self.INVALID_DATA_2),
                                     content_type='application/json')
@@ -200,22 +205,22 @@ class TestEmployeeViewsAPI(TestCase):
                                               kwargs={'pk': self.INVALID_PK_NONE}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_update_invalid_data_pk_is_zero(self):
+    def test_delete_invalid_data_pk_is_zero(self):
         response = self.client.delete(reverse('employee-detail',
                                               kwargs={'pk': self.INVALID_PK_ZERO}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_update_invalid_data_pk_is_less_than_zero(self):
+    def test_delete_invalid_data_pk_is_less_than_zero(self):
         response = self.client.delete(reverse('employee-detail',
                                               kwargs={'pk': self.INVALID_PK_LESS_THAN_ZERO}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_update_invalid_data_pk_is_more_than_ultimate(self):
+    def test_delete_invalid_data_pk_is_more_than_ultimate(self):
         response = self.client.delete(reverse('employee-detail',
                                               kwargs={'pk': self.INVALID_PK_MORE_THAN_ULTIMATE}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_update_invalid_data_pk_is_string(self):
+    def test_delete_invalid_data_pk_is_string(self):
         response = self.client.delete(reverse('employee-detail',
                                               kwargs={'pk': self.INVALID_PK_STRING}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
