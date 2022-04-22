@@ -1,5 +1,5 @@
 name: Linter
-on: [push, pull_request]
+on: [push]
 
 jobs:
   Linter_job:
@@ -20,3 +20,5 @@ jobs:
             cd management
       - name: flake8 Lint
         uses: py-actions/flake8@v2
+        with:
+          ignore: "E501"
