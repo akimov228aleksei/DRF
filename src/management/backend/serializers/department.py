@@ -15,7 +15,8 @@ class DepartmentDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Department
-        exclude = 'id',
+        fields = ('url', 'title', 'description', 'time_create', 'time_update',
+                  'total_count_employee', 'average_salary')
 
     total_count_employee = serializers.IntegerField()
     average_salary = serializers.IntegerField()

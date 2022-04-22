@@ -11,14 +11,16 @@ class VacationViewSet(ViewSet):
     def list(self, request):
         """The method displays all records"""
         queryset = Vacation.objects.all()
-        serializer = VacationSerializer(queryset, many=True, context={'request': request})
+        serializer = VacationSerializer(queryset, many=True,
+                                        context={'request': request})
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
         """The method displays the detailed data of a particular record"""
         queryset = Vacation.objects.all()
         vacation = get_object_or_404(queryset, pk=pk)
-        serializer = VacationSerializer(vacation)
+        serializer = VacationSerializer(vacation,
+                                        context={'request': request})
         return Response(serializer.data)
 
     def create(self, request):
@@ -32,7 +34,8 @@ class VacationViewSet(ViewSet):
         """The method updates a specific record"""
         queryset = Vacation.objects.all()
         vacation = get_object_or_404(queryset, pk=pk)
-        serializer = VacationSerializer(data=request.data, instance=vacation)
+        serializer = VacationSerializer(data=request.data,
+                                        instance=vacation)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)

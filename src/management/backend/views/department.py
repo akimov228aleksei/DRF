@@ -11,14 +11,16 @@ class DepartmentViewSet(ViewSet):
     def list(self, request):
         """The method displays all records"""
         queryset = Department.objects.all()
-        serializer = DepartmentSerializer(queryset, many=True, context={'request': request})
+        serializer = DepartmentSerializer(queryset, many=True,
+                                          context={'request': request})
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
         """The method displays the detailed data of a particular record"""
         queryset = Department.objects.all()
         department = get_object_or_404(queryset, pk=pk)
-        serializer = DepartmentDetailSerializer(department)
+        serializer = DepartmentDetailSerializer(department,
+                                                context={'request': request})
         return Response(serializer.data)
 
     def create(self, request):
@@ -32,7 +34,8 @@ class DepartmentViewSet(ViewSet):
         """The method updates a specific record"""
         queryset = Department.objects.all()
         department = get_object_or_404(queryset, pk=pk)
-        serializer = DepartmentSerializer(data=request.data, instance=department)
+        serializer = DepartmentSerializer(data=request.data,
+                                          instance=department)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)

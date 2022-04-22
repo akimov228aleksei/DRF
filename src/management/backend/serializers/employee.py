@@ -15,4 +15,6 @@ class EmployeeDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Employee
-        exclude = 'id',
+        fields = ('url', 'first_name', 'second_name', 'birthday',
+                  'department', 'position', 'salary', 'on_boarding_day')
+
