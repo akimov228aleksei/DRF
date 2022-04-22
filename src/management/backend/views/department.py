@@ -11,7 +11,7 @@ class DepartmentViewSet(ViewSet):
     def list(self, request):
         """The method displays all records"""
         queryset = Department.objects.all()
-        serializer = DepartmentSerializer(queryset, many=True)
+        serializer = DepartmentSerializer(queryset, many=True, context={'request': request})
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):

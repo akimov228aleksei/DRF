@@ -11,7 +11,7 @@ class PositionViewSet(ViewSet):
     def list(self, request):
         """The method displays all records"""
         queryset = Position.objects.all()
-        serializer = PositionSerializer(queryset, many=True)
+        serializer = PositionSerializer(queryset, many=True, context={'request': request})
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):

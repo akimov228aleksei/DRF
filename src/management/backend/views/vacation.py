@@ -11,7 +11,7 @@ class VacationViewSet(ViewSet):
     def list(self, request):
         """The method displays all records"""
         queryset = Vacation.objects.all()
-        serializer = VacationSerializer(queryset, many=True)
+        serializer = VacationSerializer(queryset, many=True, context={'request': request})
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):

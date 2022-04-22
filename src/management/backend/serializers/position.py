@@ -7,4 +7,4 @@ class PositionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Position
-        fields = '__all__'
+        fields = ('url', 'title', 'max_salary', 'active', 'time_create')

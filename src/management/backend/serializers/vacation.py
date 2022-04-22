@@ -7,4 +7,4 @@ class VacationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Vacation
-        fields = '__all__'
+        fields = ('url', 'employee', 'start_date', 'end_date')
