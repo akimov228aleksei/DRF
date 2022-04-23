@@ -19,8 +19,7 @@ class EmployeeViewSet(ViewSet):
         """The method displays the detailed data of a particular record"""
         queryset = Employee.objects.all()
         employee = get_object_or_404(queryset, pk=pk)
-        serializer = EmployeeDetailSerializer(employee,
-                                              context={'request': request})
+        serializer = EmployeeDetailSerializer(employee)
         return Response(serializer.data)
 
     def create(self, request):

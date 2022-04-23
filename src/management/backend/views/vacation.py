@@ -2,7 +2,7 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.views import Response
 from rest_framework.viewsets import ViewSet
 from ..models.vacation import Vacation
-from ..serializers.vacation import VacationSerializer
+from ..serializers.vacation import VacationSerializer, VacationDetailSerializer
 
 
 class VacationViewSet(ViewSet):
@@ -19,13 +19,13 @@ class VacationViewSet(ViewSet):
         """The method displays the detailed data of a particular record"""
         queryset = Vacation.objects.all()
         vacation = get_object_or_404(queryset, pk=pk)
-        serializer = VacationSerializer(vacation,
-                                        context={'request': request})
+        serializer = VacationDetailSerializer(vacation,
+                                              context={'request': request})
         return Response(serializer.data)
 
     def create(self, request):
         """The method creates a new record"""
-        serializer = VacationSerializer(data=request.data)
+        serializer = VacationDetailSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
@@ -34,8 +34,8 @@ class VacationViewSet(ViewSet):
         """The method updates a specific record"""
         queryset = Vacation.objects.all()
         vacation = get_object_or_404(queryset, pk=pk)
-        serializer = VacationSerializer(data=request.data,
-                                        instance=vacation)
+        serializer = VacationDetailSerializer(data=request.data,
+                                              instance=vacation)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
@@ -44,6 +44,6 @@ class VacationViewSet(ViewSet):
         """The method deletes a specific entry"""
         queryset = Vacation.objects.all()
         vacation = get_object_or_404(queryset, pk=pk)
-        serializer = VacationSerializer(instance=vacation)
+        serializer = VacationDetailSerializer(instance=vacation)
         vacation.delete()
         return Response(serializer.data)

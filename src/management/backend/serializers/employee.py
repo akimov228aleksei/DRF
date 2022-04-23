@@ -2,7 +2,7 @@ from rest_framework import serializers
 from ..models.employee import Employee
 
 
-class EmployeeSerializer(serializers.ModelSerializer):
+class EmployeeSerializer(serializers.HyperlinkedModelSerializer):
     """Data serialization class for the whole list of records"""
 
     class Meta:
@@ -15,6 +15,4 @@ class EmployeeDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Employee
-        fields = ('url', 'first_name', 'second_name', 'birthday',
-                  'department', 'position', 'salary', 'on_boarding_day')
-
+        fields = '__all__'

@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.test import Client
 from rest_framework import status
+
 from ..models.department import Department
 from django.urls import reverse
 import json
@@ -42,7 +43,8 @@ class TestDepartmentViewsAPI(TestCase):
     def test_get_list(self):
         response = self.client.get(reverse('department-list'))
         department = Department.objects.all()
-        serializer = DepartmentSerializer(department, many=True)
+        serializer = DepartmentSerializer(department, many=True,
+                                          context={'request': response.wsgi_request})
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -83,7 +85,7 @@ class TestDepartmentViewsAPI(TestCase):
                                     data=json.dumps(self.VALID_DATA),
                                     content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data, {'id': 2,
+        self.assertEqual(response.data, {'url': f"http://testserver{reverse('department-detail',kwargs={'pk': 2})}",
                                          'title': 'Some department',
                                          'description': 'Description about some department'})
 
@@ -99,7 +101,7 @@ class TestDepartmentViewsAPI(TestCase):
                                    data=json.dumps(self.VALID_DATA_UPDATE),
                                    content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data, {'id': self.department.pk,
+        self.assertEqual(response.data, {'url': f"http://testserver{reverse('department-detail',kwargs={'pk': 1})}",
                                          'title': 'Some updated department',
                                          'description': 'Description about some updated department'})
 

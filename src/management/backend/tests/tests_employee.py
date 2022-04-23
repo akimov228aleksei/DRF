@@ -70,7 +70,8 @@ class TestEmployeeViewsAPI(TestCase):
     def test_get_list(self):
         response = self.client.get(reverse('employee-list'))
         employee = Employee.objects.all()
-        serializer = EmployeeSerializer(employee, many=True)
+        serializer = EmployeeSerializer(employee, many=True,
+                                        context={'request': response.wsgi_request})
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 

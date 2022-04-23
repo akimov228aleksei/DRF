@@ -19,13 +19,13 @@ class DepartmentViewSet(ViewSet):
         """The method displays the detailed data of a particular record"""
         queryset = Department.objects.all()
         department = get_object_or_404(queryset, pk=pk)
-        serializer = DepartmentDetailSerializer(department,
-                                                context={'request': request})
+        serializer = DepartmentDetailSerializer(department)
         return Response(serializer.data)
 
     def create(self, request):
         """The method creates a new record"""
-        serializer = DepartmentSerializer(data=request.data)
+        serializer = DepartmentSerializer(data=request.data,
+                                          context={'request': request})
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
@@ -35,7 +35,8 @@ class DepartmentViewSet(ViewSet):
         queryset = Department.objects.all()
         department = get_object_or_404(queryset, pk=pk)
         serializer = DepartmentSerializer(data=request.data,
-                                          instance=department)
+                                          instance=department,
+                                          context={'request': request})
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
@@ -44,6 +45,6 @@ class DepartmentViewSet(ViewSet):
         """The method deletes a specific entry"""
         queryset = Department.objects.all()
         department = get_object_or_404(queryset, pk=pk)
-        serializer = DepartmentSerializer(instance=department)
+        serializer = DepartmentDetailSerializer(instance=department)
         department.delete()
         return Response(serializer.data)

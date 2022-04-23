@@ -15,8 +15,7 @@ class DepartmentDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Department
-        fields = ('url', 'title', 'description', 'time_create', 'time_update',
-                  'total_count_employee', 'average_salary')
+        fields = '__all__'
 
-    total_count_employee = serializers.IntegerField()
-    average_salary = serializers.IntegerField()
+    total_count_employee = serializers.IntegerField(read_only=True)
+    average_salary = serializers.IntegerField(read_only=True)

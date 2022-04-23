@@ -2,7 +2,7 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.views import Response
 from rest_framework.viewsets import ViewSet
 from ..models.position import Position
-from ..serializers.position import PositionSerializer
+from ..serializers.position import PositionSerializer, PositionDetailSerializer
 
 
 class PositionViewSet(ViewSet):
@@ -19,13 +19,13 @@ class PositionViewSet(ViewSet):
         """The method displays the detailed data of a particular record"""
         queryset = Position.objects.all()
         position = get_object_or_404(queryset, pk=pk)
-        serializer = PositionSerializer(position,
-                                        context={'request': request})
+        serializer = PositionDetailSerializer(position,
+                                              context={'request': request})
         return Response(serializer.data)
 
     def create(self, request):
         """The method creates a new record"""
-        serializer = PositionSerializer(data=request.data)
+        serializer = PositionDetailSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
@@ -34,8 +34,8 @@ class PositionViewSet(ViewSet):
         """The method updates a specific record"""
         queryset = Position.objects.all()
         position = get_object_or_404(queryset, pk=pk)
-        serializer = PositionSerializer(data=request.data,
-                                        instance=position)
+        serializer = PositionDetailSerializer(data=request.data,
+                                              instance=position)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
@@ -44,6 +44,6 @@ class PositionViewSet(ViewSet):
         """The method deletes a specific entry"""
         queryset = Position.objects.all()
         position = get_object_or_404(queryset, pk=pk)
-        serializer = PositionSerializer(instance=position)
+        serializer = PositionDetailSerializer(instance=position)
         position.delete()
         return Response(serializer.data)

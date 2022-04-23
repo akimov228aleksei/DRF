@@ -9,10 +9,10 @@ from ..models.vacation import Vacation
 from django.urls import reverse
 import json
 
-from ..serializers.vacation import VacationSerializer
+from ..serializers.vacation import VacationSerializer, VacationDetailSerializer
 
 
-class TestEmployeeViewsAPI(TestCase):
+class TestVacationViewsAPI(TestCase):
     VALID_DATA = {
         'employee': 1,
         'start_date': '2022-07-01',
@@ -60,14 +60,15 @@ class TestEmployeeViewsAPI(TestCase):
     def test_get_list(self):
         response = self.client.get(reverse('vacation-list'))
         vacation = Vacation.objects.all()
-        serializer = VacationSerializer(vacation, many=True)
+        serializer = VacationSerializer(vacation, many=True,
+                                        context={'request': response.wsgi_request})
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_valid_detail_data(self):
         response = self.client.get(reverse('vacation-detail',
                                            kwargs={'pk': self.vacation.pk}))
-        serializer = VacationSerializer(self.vacation)
+        serializer = VacationDetailSerializer(self.vacation)
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 

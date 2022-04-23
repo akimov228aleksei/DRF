@@ -8,3 +8,11 @@ class PositionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Position
         fields = ('url', 'title', 'max_salary', 'active', 'time_create')
+
+
+class PositionDetailSerializer(serializers.ModelSerializer):
+    """Single entry data serialization class"""
+
+    class Meta:
+        model = Position
+        fields = '__all__'
