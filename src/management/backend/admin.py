@@ -4,5 +4,5 @@ from backend.models import department, employee, position, vacation
 
 admin.site.register(department.Department)
 admin.site.register(employee.Employee)
-admin.site.register(employee.Position)
+admin.site.register(position.Position)
 admin.site.register(vacation.Vacation)

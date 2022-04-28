@@ -1,6 +1,6 @@
 from django.db import models
 from .employee import Employee
-from django.db.models import Count, Avg
+from django.db.models import Avg
 
 
 class Department(models.Model):
