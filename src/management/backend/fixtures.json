@@ -30,7 +30,9 @@
     "pk": 1,
     "fields": {
       "title": "Backend developers",
-      "description": "Description about backend developers"
+      "description": "Description about backend developers",
+      "time_create": "2022-03-31T13:46:53.491Z",
+      "time_update": "2022-03-31T13:46:53.491Z"
     }
   },
   {
@@ -38,7 +40,9 @@
     "pk": 2,
     "fields": {
       "title": "Frontend developers",
-      "description": "Description about frontend developers"
+      "description": "Description about frontend developers",
+      "time_create": "2022-03-31T13:46:53.491Z",
+      "time_update": "2022-03-31T13:46:53.491Z"
     }
   },
   {
@@ -47,7 +51,8 @@
     "fields": {
       "title": "Python developer",
       "max_salary": 3000,
-      "active": true
+      "active": true,
+      "time_create": "2022-03-17"
     }
   },
   {
@@ -56,7 +61,8 @@
     "fields": {
       "title": "C++ developer",
       "max_salary": 1000,
-      "active": false
+      "active": false,
+      "time_create": "2022-03-17"
     }
   },
   {
