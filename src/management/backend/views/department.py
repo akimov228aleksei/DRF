@@ -15,7 +15,8 @@ class DepartmentViewSet(ViewSet):
     def list(self, request):
         """The method displays all records"""
         queryset = Department.objects.all()
-        serializer = DepartmentSerializer(queryset, many=True)
+        serializer = DepartmentSerializer(queryset, many=True,
+                                          context={'request': request})
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
@@ -27,7 +28,8 @@ class DepartmentViewSet(ViewSet):
 
     def create(self, request):
         """The method creates a new record"""
-        serializer = DepartmentSerializer(data=request.data)
+        serializer = DepartmentSerializer(data=request.data,
+                                          context={'request': request})
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
@@ -36,7 +38,9 @@ class DepartmentViewSet(ViewSet):
         """The method updates a specific record"""
         queryset = Department.objects.all()
         department = get_object_or_404(queryset, pk=pk)
-        serializer = DepartmentSerializer(data=request.data, instance=department)
+        serializer = DepartmentSerializer(data=request.data,
+                                          instance=department,
+                                          context={'request': request})
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
@@ -45,6 +49,6 @@ class DepartmentViewSet(ViewSet):
         """The method deletes a specific entry"""
         queryset = Department.objects.all()
         department = get_object_or_404(queryset, pk=pk)
-        serializer = DepartmentSerializer(instance=department)
+        serializer = DepartmentDetailSerializer(instance=department)
         department.delete()
         return Response(serializer.data)

@@ -15,7 +15,8 @@ class EmployeeViewSet(ViewSet):
     def list(self, request):
         """The method displays all records"""
         queryset = Employee.objects.all()
-        serializer = EmployeeSerializer(queryset, many=True)
+        serializer = EmployeeSerializer(queryset, many=True,
+                                        context={'request': request})
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
@@ -36,7 +37,8 @@ class EmployeeViewSet(ViewSet):
         """The method updates a specific record"""
         queryset = Employee.objects.all()
         employee = get_object_or_404(queryset, pk=pk)
-        serializer = EmployeeDetailSerializer(data=request.data, instance=employee)
+        serializer = EmployeeDetailSerializer(data=request.data,
+                                              instance=employee)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
