@@ -7,9 +7,5 @@
 
 ## Quick start
     1. Define invironment variables for DB (or use default variables)
-    2. Open main directory with project where located 'run_app.sh' file
-    3. Use command 'source run_app.sh' to run script
-    4. Use command 'python manage.py runserver' to run server
-
-
-    
+    2. Open directory where located 'manage.py' file
+    3. Use command 'make run_server' to run server
