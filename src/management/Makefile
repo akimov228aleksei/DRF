@@ -1,23 +1,18 @@
-run_server:
+init_app:
 	python -m pip install -U pip
-		pip install -r ../requirements.txt
-			python ./manage.py migrate
-				python ./manage.py loaddata backend/fixtures
-					python ./manage.py runserver
+	pip install -r ../requirements.txt
+	python ./manage.py migrate
+	python ./manage.py loaddata backend/fixtures
 
-run_migration:
+run_migrations:
 	python ./manage.py makemigrations
-		python ./manage.py migrate
+	python ./manage.py migrate
 
 reset_db:
 	find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
-		find . -path "*/migrations/*.pyc"  -delete
-			python ./manage.py makemigrations
-				python ./manage.py migrate
+	find . -path "*/migrations/*.pyc"  -delete
+	run_migrations
 
 reset_sqlite:
-	find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
-		find . -path "*/migrations/*.pyc"  -delete
-			rm db.sqlite3
-				python ./manage.py makemigrations
-					python ./manage.py migrate
+	rm db.sqlite3
+	reset_db
