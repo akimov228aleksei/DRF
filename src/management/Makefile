@@ -11,8 +11,8 @@ run_migrations:
 reset_db:
 	find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
 	find . -path "*/migrations/*.pyc"  -delete
-	run_migrations
+	make run_migrations
 
 reset_sqlite:
 	rm db.sqlite3
-	reset_db
+	make reset_db
