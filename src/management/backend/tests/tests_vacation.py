@@ -1,18 +1,20 @@
-from django.test import TestCase
-from django.test import Client
+from rest_framework.test import APITestCase
 from rest_framework import status
+
+from django.contrib.auth.models import User, Permission
+from django.urls import reverse
+from django.db.models import Q
+
+import json
 
 from ..models.department import Department
 from ..models.employee import Employee
 from ..models.position import Position
 from ..models.vacation import Vacation
-from django.urls import reverse
-import json
-
 from ..serializers.vacation import VacationSerializer, VacationDetailSerializer
 
 
-class TestVacationViewsAPI(TestCase):
+class TestVacationViewsAPI(APITestCase):
     VALID_DATA = {
         'employee': 1,
         'start_date': '2022-07-01',
@@ -55,7 +57,12 @@ class TestVacationViewsAPI(TestCase):
         self.vacation = Vacation.objects.create(employee=self.employee,
                                                 start_date='2022-02-02',
                                                 end_date='2022-03-03')
-        self.client = Client()
+        user = User.objects.create_user(username='Alex', password='1q2w3e')
+        self.client.force_authenticate(user=user)
+        permissions = Permission.objects.filter(Q(codename='add_vacation') |
+                                                Q(codename='change_vacation') |
+                                                Q(codename='delete_vacation'))
+        user.user_permissions.add(*permissions)
 
     def test_get_list(self):
         response = self.client.get(reverse('vacation-list'))

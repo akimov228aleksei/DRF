@@ -1,15 +1,18 @@
-from django.test import TestCase
-from django.test import Client
+from rest_framework.test import APITestCase
 from rest_framework import status
-from ..models.position import Position
+
+from django.contrib.auth.models import User, Permission
 from django.urls import reverse
+from django.db.models import Q
+
 import json
 import datetime
 
+from ..models.position import Position
 from ..serializers.position import PositionSerializer, PositionDetailSerializer
 
 
-class TestPositionViewsAPI(TestCase):
+class TestPositionViewsAPI(APITestCase):
     VALID_DATA = {
         'title': 'Position number 1',
         'max_salary': 500
@@ -38,7 +41,12 @@ class TestPositionViewsAPI(TestCase):
     def setUp(self):
         self.position = Position.objects.create(title='Some position',
                                                 max_salary=4000)
-        self.client = Client()
+        user = User.objects.create_user(username='Alex', password='1q2w3e')
+        self.client.force_authenticate(user=user)
+        permissions = Permission.objects.filter(Q(codename='add_position') |
+                                                Q(codename='change_position') |
+                                                Q(codename='delete_position'))
+        user.user_permissions.add(*permissions)
 
     def test_get_list(self):
         response = self.client.get(reverse('position-list'))

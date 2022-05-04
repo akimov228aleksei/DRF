@@ -10,7 +10,7 @@ from ..permissions import IsAdminOrManagerOrReadOnly
 class DepartmentViewSet(ViewSet):
     """A class that describes all available methods with a department model"""
 
-    permission_classes = IsAdminOrManagerOrReadOnly, IsAuthenticated
+    permission_classes = IsAuthenticated, IsAdminOrManagerOrReadOnly
 
     def list(self, request):
         """The method displays all records"""

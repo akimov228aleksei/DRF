@@ -10,7 +10,7 @@ class IsAdminOrManagerOrReadOnly(permissions.BasePermission):
             return request.user.has_perm(f'backend.add_{view.basename}')
 
         if view.action == 'update':
-            return request.user.has_perm(f'backend.update_{view.basename}')
+            return request.user.has_perm(f'backend.change_{view.basename}')
 
-        if view.action == 'delete':
+        if view.action == 'destroy':
             return request.user.has_perm(f'backend.delete_{view.basename}')
