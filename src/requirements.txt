@@ -3,3 +3,4 @@ djangorestframework==3.13.1
 flake8
 coveralls
 drf-yasg
+djoser
