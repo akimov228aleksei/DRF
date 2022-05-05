@@ -1,0 +1,86 @@
+[
+  {
+    "model": "backend.employee",
+    "pk": 1,
+    "fields": {
+      "first_name": "Petr",
+      "second_name": "Ivanov",
+      "birthday": "2017-04-21",
+      "department": 1,
+      "position": 1,
+      "salary": 2000,
+      "on_boarding_day": "2022-04-08"
+    }
+  },
+  {
+    "model": "backend.employee",
+    "pk": 2,
+    "fields": {
+      "first_name": "Ivan",
+      "second_name": "Petrov",
+      "birthday": "2017-04-21",
+      "department": 2,
+      "position": 2,
+      "salary": 3000,
+      "on_boarding_day": "2021-04-08"
+    }
+  },
+  {
+    "model": "backend.department",
+    "pk": 1,
+    "fields": {
+      "title": "Backend developers",
+      "description": "Description about backend developers",
+      "time_create": "2022-03-31T13:46:53.491Z",
+      "time_update": "2022-03-31T13:46:53.491Z"
+    }
+  },
+  {
+    "model": "backend.department",
+    "pk": 2,
+    "fields": {
+      "title": "Frontend developers",
+      "description": "Description about frontend developers",
+      "time_create": "2022-03-31T13:46:53.491Z",
+      "time_update": "2022-03-31T13:46:53.491Z"
+    }
+  },
+  {
+    "model": "backend.position",
+    "pk": 1,
+    "fields": {
+      "title": "Python developer",
+      "max_salary": 3000,
+      "active": true,
+      "time_create": "2022-03-17"
+    }
+  },
+  {
+    "model": "backend.position",
+    "pk": 2,
+    "fields": {
+      "title": "C++ developer",
+      "max_salary": 1000,
+      "active": false,
+      "time_create": "2022-03-17"
+    }
+  },
+  {
+    "model": "backend.vacation",
+    "pk": 1,
+    "fields": {
+      "employee": 1,
+      "start_date": "2022-03-02",
+      "end_date": "2022-05-02"
+    }
+  },
+  {
+    "model": "backend.vacation",
+    "pk": 2,
+    "fields": {
+      "employee": 2,
+      "start_date": "2022-07-07",
+      "end_date": "2022-09-07"
+    }
+  }
+]
