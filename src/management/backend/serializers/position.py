@@ -2,7 +2,7 @@ from rest_framework import serializers
 from ..models.position import Position
 
 
-class PositionSerializer(serializers.ModelSerializer):
+class PositionSerializer(serializers.HyperlinkedModelSerializer):
     """Data serialization class for the whole list of records"""
 
     class Meta:

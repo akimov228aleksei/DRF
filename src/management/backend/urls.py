@@ -1,6 +1,6 @@
 """Module with API URL ratios"""
 
-from django.urls import path, include
+from django.urls import path, include, re_path
 from rest_framework.routers import SimpleRouter
 from .views import department, employee, position, vacation
 
@@ -12,4 +12,7 @@ router.register(r'vacation', vacation.VacationViewSet, basename='vacation')
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('drf-auth/', include('rest_framework.urls')),
+    path('auth/', include('djoser.urls')),
+    re_path(r'^auth/', include('djoser.urls.authtoken')),
 ]

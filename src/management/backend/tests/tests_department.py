@@ -1,15 +1,17 @@
-from django.test import TestCase
-from django.test import Client
+from rest_framework.test import APITestCase
 from rest_framework import status
 
-from ..models.department import Department
+from django.contrib.auth.models import User, Permission
 from django.urls import reverse
+from django.db.models import Q
+
 import json
 
+from ..models.department import Department
 from ..serializers.department import DepartmentSerializer, DepartmentDetailSerializer
 
 
-class TestDepartmentViewsAPI(TestCase):
+class TestDepartmentViewsAPI(APITestCase):
     VALID_DATA = {
         'title': 'Some department',
         'description': 'Description about some department'
@@ -38,7 +40,14 @@ class TestDepartmentViewsAPI(TestCase):
     def setUp(self):
         self.department = Department.objects.create(title='Some department_first',
                                                     description='Description about dep_first')
-        self.client = Client()
+        user = User.objects.create_user(username='Alex', password='1q2w3e')
+        # self.user_1_token = Token.objects.create(user=user)
+        # self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.user_token.key)
+        self.client.force_authenticate(user=user)
+        permissions = Permission.objects.filter(Q(codename='add_department') |
+                                                Q(codename='change_department') |
+                                                Q(codename='delete_department'))
+        user.user_permissions.add(*permissions)
 
     def test_get_list(self):
         response = self.client.get(reverse('department-list'))
@@ -85,7 +94,7 @@ class TestDepartmentViewsAPI(TestCase):
                                     data=json.dumps(self.VALID_DATA),
                                     content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data, {'url': f"http://testserver{reverse('department-detail',kwargs={'pk': 2})}",
+        self.assertEqual(response.data, {'url': f"http://testserver{reverse('department-detail', kwargs={'pk': 2})}",
                                          'title': 'Some department',
                                          'description': 'Description about some department'})
 
@@ -101,7 +110,7 @@ class TestDepartmentViewsAPI(TestCase):
                                    data=json.dumps(self.VALID_DATA_UPDATE),
                                    content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data, {'url': f"http://testserver{reverse('department-detail',kwargs={'pk': 1})}",
+        self.assertEqual(response.data, {'url': f"http://testserver{reverse('department-detail', kwargs={'pk': 1})}",
                                          'title': 'Some updated department',
                                          'description': 'Description about some updated department'})
 

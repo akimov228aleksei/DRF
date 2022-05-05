@@ -1,9 +1,13 @@
-from django.test import TestCase
-from django.test import Client
+from rest_framework.test import APITestCase
 from rest_framework import status
+
+from django.contrib.auth.models import User, Permission
+from django.urls import reverse
+from django.db.models import Q
+
 from ..models.employee import Employee
 from ..models.department import Department
-from django.urls import reverse
+
 import json
 import datetime
 
@@ -11,7 +15,7 @@ from ..models.position import Position
 from ..serializers.employee import EmployeeSerializer, EmployeeDetailSerializer
 
 
-class TestEmployeeViewsAPI(TestCase):
+class TestEmployeeViewsAPI(APITestCase):
     VALID_DATA = {
         'first_name': 'Ivan',
         'second_name': 'Ivanov',
@@ -65,7 +69,13 @@ class TestEmployeeViewsAPI(TestCase):
                                                 department=self.department,
                                                 position=self.position,
                                                 salary=2000)
-        self.client = Client()
+
+        user = User.objects.create_user(username='Alex', password='1q2w3e')
+        self.client.force_authenticate(user=user)
+        permissions = Permission.objects.filter(Q(codename='add_employee') |
+                                                Q(codename='change_employee') |
+                                                Q(codename='delete_employee'))
+        user.user_permissions.add(*permissions)
 
     def test_get_list(self):
         response = self.client.get(reverse('employee-list'))
@@ -122,13 +132,13 @@ class TestEmployeeViewsAPI(TestCase):
                                          'on_boarding_day': f'{datetime.date.today()}'})
 
     def test_create_invalid_data_1(self):
-        response = self.client.post(reverse('department-list'),
+        response = self.client.post(reverse('employee-list'),
                                     data=json.dumps(self.INVALID_DATA_1),
                                     content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_invalid_data_2(self):
-        response = self.client.post(reverse('department-list'),
+        response = self.client.post(reverse('employee-list'),
                                     data=json.dumps(self.INVALID_DATA_2),
                                     content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
