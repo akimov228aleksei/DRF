@@ -11,7 +11,10 @@ class AuthorizationView(View):
     template_name = 'authorization.html'
 
     def get(self, request):
-        form = AuthorizationForm()
+        # If user is authorized, then redirect on 'home'
+        if request.COOKIES.get('Token'):
+            return redirect('home')
+        form = AuthorizationForm
         return render(request, self.template_name, {'form': form})
 
     def post(self, request):
@@ -22,6 +25,7 @@ class AuthorizationView(View):
                                      'password': (None, form.data['password'])})
 
             if status.is_success(r.status_code) or status.is_redirect(r.status_code):
+                # If token is received, then it is added to the cookies
                 response = redirect('home')
                 response.set_cookie('Token', r.json().get('auth_token'))
                 return response

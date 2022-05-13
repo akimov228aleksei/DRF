@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import View
 import requests
 from ..forms.registration import RegistrationForm
+from frontend.views import authorization
 
 
 class RegistrationView(View):
@@ -11,6 +12,9 @@ class RegistrationView(View):
     template_name = 'registration.html'
 
     def get(self, request):
+        # If user is authorized, then redirect on 'home'
+        if request.COOKIES.get('Token'):
+            return redirect('home')
         form = RegistrationForm
         return render(request, self.template_name, {'form': form})
 
@@ -23,7 +27,9 @@ class RegistrationView(View):
                                      'email': (None, form.data['email'])})
 
             if status.is_success(r.status_code) or status.is_redirect(r.status_code):
-                return redirect('home')
+                # If user is created, he is automatically authorized
+                auth = authorization.AuthorizationView()
+                return auth.post(request)
             return render(request, self.template_name, {'form': form, 'status': r.text})
         else:
             return render(request, self.template_name, {'form': form})

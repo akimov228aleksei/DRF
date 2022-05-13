@@ -1,10 +1,41 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="utf-8">
     <title>{% block title %}{% endblock %}</title>
-</head>
-<body>
-
-</body>
+  </head>
+  <body>
+    <table align="center" width="70%">
+        <tr>
+          <th align="left" colspan="4"><button>Departments</button>
+          <button>Employee</button>
+          <button>Position</button>
+          <button>Vacation</button>
+          </th>
+          <th align="left">
+            <form id='logout' action="http://127.0.0.1:8000/logout/" method="post">
+              {% csrf_token %}
+              <button type="submit" form="logout"> Logout </button>
+            </form>
+          </th>
+        </tr>
+      <tr>
+          <th>{% block with_partition_name %}{% endblock %}</th>
+          <th align="right" colspan="3"><button>Add</button></th>
+        </tr>
+      <tr>{% block with_description %}{% endblock %}
+        </tr>
+      <tbody>
+      {% block content %}
+      {% endblock %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td align="right" colspan="4">Employee management application</td>
+        </tr>
+      </tfoot>
+    </table>
+  </body>
 </html>
