@@ -4,9 +4,8 @@ from rest_framework import status
 from django.contrib.auth.models import User, Permission
 from django.urls import reverse
 from django.db.models import Q
-from django.utils import timezone
 
-from datetime import date, datetime
+from datetime import date
 import json
 
 from ..models.department import Department
