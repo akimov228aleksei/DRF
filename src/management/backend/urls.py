@@ -12,7 +12,6 @@ router.register(r'vacation', vacation.VacationViewSet, basename='vacation')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('drf-auth/', include('rest_framework.urls')),
     path('auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
 ]
