@@ -4,7 +4,9 @@ from rest_framework import status
 from django.contrib.auth.models import User, Permission
 from django.urls import reverse
 from django.db.models import Q
+from django.utils import timezone
 
+from datetime import date, datetime
 import json
 
 from ..models.department import Department
@@ -41,8 +43,6 @@ class TestDepartmentViewsAPI(APITestCase):
         self.department = Department.objects.create(title='Some department_first',
                                                     description='Description about dep_first')
         user = User.objects.create_user(username='Alex', password='1q2w3e')
-        # self.user_1_token = Token.objects.create(user=user)
-        # self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.user_token.key)
         self.client.force_authenticate(user=user)
         permissions = Permission.objects.filter(Q(codename='add_department') |
                                                 Q(codename='change_department') |
@@ -96,7 +96,9 @@ class TestDepartmentViewsAPI(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, {'url': f"http://testserver{reverse('department-detail', kwargs={'pk': 2})}",
                                          'title': 'Some department',
-                                         'description': 'Description about some department'})
+                                         'description': 'Description about some department',
+                                         'time_create': f'{date.today()}',
+                                         'time_update': response.data['time_update']})
 
     def test_create_invalid_data(self):
         response = self.client.post(reverse('department-list'),
@@ -112,7 +114,9 @@ class TestDepartmentViewsAPI(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, {'url': f"http://testserver{reverse('department-detail', kwargs={'pk': 1})}",
                                          'title': 'Some updated department',
-                                         'description': 'Description about some updated department'})
+                                         'description': 'Description about some updated department',
+                                         'time_create': f'{date.today()}',
+                                         'time_update': response.data['time_update']})
 
     def test_update_invalid_data(self):
         response = self.client.put(reverse('department-detail',

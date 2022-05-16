@@ -42,13 +42,13 @@ class TestDepartmentViewsAPI(APITestCase):
     def test_get_list_without_token(self):
         self.client.credentials()
         response = self.client.get(reverse('department-list'))
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_delete_without_token(self):
         self.client.credentials()
         response = self.client.delete(reverse('department-detail',
                                               kwargs={'pk': self.department_2.pk}))
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_delete_without_permissions(self):
         permission_delete = Permission.objects.get(codename='delete_department')
