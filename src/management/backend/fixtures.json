@@ -31,7 +31,7 @@
     "fields": {
       "title": "Backend developers",
       "description": "Description about backend developers",
-      "time_create": "2022-03-31T13:46:53.491Z",
+      "time_create": "2022-03-31",
       "time_update": "2022-03-31T13:46:53.491Z"
     }
   },
@@ -41,7 +41,7 @@
     "fields": {
       "title": "Frontend developers",
       "description": "Description about frontend developers",
-      "time_create": "2022-03-31T13:46:53.491Z",
+      "time_create": "2022-03-31",
       "time_update": "2022-03-31T13:46:53.491Z"
     }
   },

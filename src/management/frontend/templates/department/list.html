@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+
+{% block title %}Department{% endblock %}
+
+{% block with_partition_name %}Department list{% endblock %}
+
+{% block with_button_add %}
+{% if "backend.add_department" in permissions %}
+
+<a href="{% url 'department-create' %}">
+    <button class="open-button">Add</button>
+</a>
+
+{% endif %}
+{% endblock %}
+
+{% block with_description %}
+<th align="left">Name</th>
+<th align="left">Description</th>
+<th align="left">Date of create</th>
+<th align="left">Last Update</th>
+{% endblock %}
+
+{% block content %}
+{% if content %}
+{% for i in content %}
+<tr>
+    <td>{{ i.title }}</td>
+    <td>{{ i.description }}</td>
+    <td>{{ i.time_create|slice:":10" }}</td>
+    <td>{{ i.time_update|slice:":10"}}</td>
+    <td>
+        <form id='detail'>
+            <button type="button" form="detail"> detail</button>
+        </form>
+    </td>
+    {% if "backend.delete_department" in permissions %}
+    <td>
+        <form method="post" action="{% url 'department-delete' %}">
+            {% csrf_token %}
+            <input type="hidden" name="url" value="{{ i.url }}">
+            <button type="submit" >Delete</button>
+        </form>
+    </td>
+    {% endif %}
+    {% if "backend.change_department" in permissions %}
+    <td>
+       <form method="get" action="{% url 'department-update' %}">
+        {% csrf_token %}
+        <input type="hidden" name="url" value="{{ i.url }}">
+        <input type="hidden" name="title" value="{{ i.title }}">
+        <input type="hidden" name="description" value="{{ i.description }}">
+        <button class="open-button">Update</button>
+       </form>
+    </td>
+    </tr>
+
+    {% endif %}
+{% endfor %}
+{% else %}
+<br>
+<p align="center" style="font-size: 30px">
+    No information available.
+</p>
+{% endif %}
+{% endblock %}

@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Registration</title>
+    <title>Authorization</title>
 </head>
 <body>
-<form action="http://127.0.0.1:8000/registration/" method="post">
+<form action="{% url 'authorization' %}" method="post">
     {% csrf_token %}
     {{ form }}
     {{ status }}

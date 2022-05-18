@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Authorization</title>
+    <title>Adding department</title>
 </head>
 <body>
-<form action="http://127.0.0.1:8000/authorization/" method="post">
+<form action="{% url 'department-create' %}" method="post">
     {% csrf_token %}
     {{ form }}
     {{ status }}
