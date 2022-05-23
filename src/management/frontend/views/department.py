@@ -14,7 +14,7 @@ update_template = 'department/update.html'
 preview_template = 'auth/preview.html'
 
 
-class DepartmentList(View):
+class DepartmentListView(View):
     """Class for rendering the home page of departments"""
 
     def get(self, request):
@@ -36,6 +36,21 @@ class DepartmentList(View):
 
             return render(request, list_template, {'content': api_request.json(),
                                                    'permissions': permissions.json()})
+        # If status != success -> rise ServerError
+        return HttpResponseServerError()
+
+# class DepartmentDetailView(View):
+#     """Class for showing detail list of departments"""
+#
+#     def post(self, request):
+#         # Getting token from cookies
+#         token = request.COOKIES.get("Token")
+#         # If token is absent -> redirect to authorization
+#         if not token:
+#             return render(request, preview_template)
+#         # Getting detail list of departments
+#         api_request = requests.get(url,
+#                                    headers={'Authorization': f'Token {token}'})
 
 
 class DepartmentCreateView(View):
@@ -68,6 +83,8 @@ class DepartmentCreateView(View):
 
             if status.is_success(api_request.status_code):
                 return redirect('home')
+            return render(request, add_template, {'form': form,
+                                                  'status': api_request.json()})
         else:
             return render(request, add_template, {'form': form})
 
@@ -108,6 +125,8 @@ class DepartmentUpdateView(View):
             return render(request, update_template, {'form': form,
                                                      'url': request.POST['url'],
                                                      'status': api_request.json()})
+        else:
+            return render(request, add_template, {'form': form})
 
 
 class DepartmentDeleteView(View):

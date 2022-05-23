@@ -16,14 +16,15 @@ class LogoutView(View):
         # Getting token from cookies
         token = request.COOKIES.get("Token")
         # If token is absent -> redirect to authorization
-        if token:
-            api_request = requests.post(self.url_logout,
-                                        headers={'Authorization': f'Token {token}'})
+        if not token:
+            return render(request, self.preview_template)
+        # Request to logout
+        api_request = requests.post(self.url_logout,
+                                    headers={'Authorization': f'Token {token}'})
 
-            if status.is_success(api_request.status_code):
-                # If the token is removed, then it is removed from the cookie
-                response = redirect('home')
-                response.set_cookie('Token', '')
-                return response
-            return HttpResponseNotFound()
-        return render(request, self.preview_template)
+        if status.is_success(api_request.status_code):
+            # If the token is removed, then it is removed from the cookie
+            response = redirect('home')
+            response.set_cookie('Token', '')
+            return response
+        return HttpResponseNotFound()

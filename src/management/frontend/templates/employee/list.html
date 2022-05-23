@@ -1,15 +1,15 @@
 {% extends 'layout.html' %}
 
-{% block title %}Department{% endblock %}
+{% block title %}Employee{% endblock %}
 
 {% block with_partition_name %}
-<span style="font-family: Arial Black;"><h4>Department list</h4></span>
+<span style="font-family: Arial Black;"><h4>Employee list</h4></span>
 {% endblock %}
 
 {% block with_button_add %}
-{% if "backend.add_department" in permissions %}
+{% if "backend.add_employee" in permissions %}
 
-    <a href="{% url 'department-create' %}" role="button" class="btn btn-success">
+    <a href="" role="button" class="btn btn-success">
         Add
     </a>
 
@@ -17,10 +17,10 @@
 {% endblock %}
 
 {% block with_description %}
-<th align="left">Title</th>
-<th align="left">Description</th>
-<th align="left">Date of create</th>
-<th align="left">Last Update</th>
+<th align="left">First name</th>
+<th align="left">Second name</th>
+<th align="left">Department</th>
+<th align="left">Position</th>
 <th></th>
 {% endblock %}
 
@@ -28,10 +28,10 @@
 {% if content %}
 {% for i in content %}
 <tr>
-    <td>{{ i.title }}</td>
-    <td>{{ i.description }}</td>
-    <td>{{ i.time_create|slice:":10" }}</td>
-    <td>{{ i.time_update|slice:":10"}}</td>
+    <td>{{ i.first_name }}</td>
+    <td>{{ i.second_name }}</td>
+    <td>{{ i.department }}</td>
+    <td>{{ i.position }}</td>
 
     <td align="center">
         <form id='detail'>

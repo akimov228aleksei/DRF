@@ -2,7 +2,7 @@ from rest_framework import status
 from django.shortcuts import render, redirect
 from django.views.generic import View
 import requests
-from frontend.forms.registration import RegistrationForm
+from frontend.forms.auth.registration import RegistrationForm
 from frontend.views.auth import authorization
 
 
@@ -31,6 +31,7 @@ class RegistrationView(View):
                 # If user is created, he is automatically authorized
                 auth = authorization.AuthorizationView()
                 return auth.post(request)
-            return render(request, self.template_name, {'form': form, 'status': api_request.text})
+            return render(request, self.template_name, {'form': form,
+                                                        'status': api_request.json()})
         else:
             return render(request, self.template_name, {'form': form})

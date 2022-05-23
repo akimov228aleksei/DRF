@@ -2,7 +2,7 @@ from rest_framework import status
 from django.shortcuts import render, redirect
 from django.views.generic import View
 import requests
-from frontend.forms.authorization import AuthorizationForm
+from frontend.forms.auth.authorization import AuthorizationForm
 
 
 class AuthorizationView(View):
@@ -29,6 +29,7 @@ class AuthorizationView(View):
                 response = redirect('home')
                 response.set_cookie('Token', api_request.json().get('auth_token'))
                 return response
-            return render(request, self.template_name, {'form': form, 'status': api_request.text})
+            return render(request, self.template_name, {'form': form,
+                                                        'status': api_request.json()})
         else:
             return render(request, self.template_name, {'form': form})
