@@ -110,7 +110,9 @@ class TestVacationViewsAPI(APITestCase):
                                     content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, {'id': 2,
-                                         'employee': 1,
+                                         'employee_first_name': self.employee.first_name,
+                                         'employee_second_name': self.employee.second_name,
+                                         'employee': self.employee.pk,
                                          'start_date': '2022-07-01',
                                          'end_date': '2022-07-23'})
 
@@ -127,7 +129,9 @@ class TestVacationViewsAPI(APITestCase):
                                    content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, {'id': 1,
-                                         'employee': 1,
+                                         'employee_first_name': self.employee.first_name,
+                                         'employee_second_name': self.employee.second_name,
+                                         'employee': self.employee.pk,
                                          'start_date': '2022-05-02',
                                          'end_date': '2022-05-25'})
 
