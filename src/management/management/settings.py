@@ -136,10 +136,14 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
     ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+        'backend.permissions.IsAdminOrManagerOrReadOnly'
+    ]
 }
 
 DJOSER = {
     'SERIALIZERS': {
-        'user_create': 'backend.serializers.user.UserSerializer'
+        'user_create': 'backend.serializers.user.UserAddGroupSerializer'
     }
 }

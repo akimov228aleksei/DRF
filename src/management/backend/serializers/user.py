@@ -3,7 +3,7 @@ from django.db.utils import IntegrityError
 from django.contrib.auth.models import Group
 
 
-class UserSerializer(UserCreateSerializer):
+class UserAddGroupSerializer(UserCreateSerializer):
     """A class that creates new users and adds them to the 'personal' group.
      The class overrides the serializer from the 'djoser' package"""
     def create(self, validated_data):
