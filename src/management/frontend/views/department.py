@@ -5,6 +5,7 @@ from django.views.generic import View
 import requests
 
 from frontend.forms.department.add import AddDepartmentForm
+from frontend.check_token import check_token
 
 url_department_list = 'http://127.0.0.1:8000/api/v1/department/'
 url_user_permissions = 'http://127.0.0.1:8000/api/v1/permissions/'
@@ -17,15 +18,10 @@ preview_template = 'auth/preview.html'
 class DepartmentListView(View):
     """Class for rendering the home page of departments"""
 
-    def get(self, request):
+    @check_token(html_to_render=preview_template)
+    def get(self, request, token):
         """Method for getting the list of departments"""
 
-        # Getting token from cookies
-        token = request.COOKIES.get("Token")
-        # If token is absent -> redirect to authorization
-        if not token:
-            return render(request, preview_template)
-        # Getting list of departments
         api_request = requests.get(url_department_list,
                                    headers={'Authorization': f'Token {token}'})
 
@@ -36,7 +32,7 @@ class DepartmentListView(View):
 
             return render(request, list_template, {'content': api_request.json(),
                                                    'permissions': permissions.json()})
-        # If status != success -> rise ServerError
+        # If status != success -> raise ServerError
         return HttpResponseServerError()
 
 # class DepartmentDetailView(View):
@@ -56,21 +52,15 @@ class DepartmentListView(View):
 class DepartmentCreateView(View):
     """Class for adding a new department"""
 
-    def get(self, request):
-        # If token is absent -> redirect to authorization
-        if not request.COOKIES.get('Token'):
-            return render(request, preview_template)
+    @check_token(preview_template)
+    def get(self, request, token):
         form = AddDepartmentForm
         return render(request, add_template, {'form': form})
 
-    def post(self, request):
+    @check_token(preview_template)
+    def post(self, request, token):
         """Method for adding a new department"""
 
-        # Getting token from cookies
-        token = request.COOKIES.get("Token")
-        # If token is absent -> redirect to authorization
-        if not token:
-            return render(request, preview_template)
         # Form validation
         form = AddDepartmentForm(request.POST)
         if form.is_valid():
@@ -92,23 +82,17 @@ class DepartmentCreateView(View):
 class DepartmentUpdateView(View):
     """Class for updating departments """
 
-    def get(self, request):
-        # If token is absent -> redirect to authorization
-        if not request.COOKIES.get('Token'):
-            return render(request, preview_template)
+    @check_token(preview_template)
+    def get(self, request, token):
         # Using AddDepartment form
         form = AddDepartmentForm(request.GET)
         return render(request, update_template, {'form': form,
                                                  'url': request.GET['url']})
 
-    def post(self, request):
+    @check_token(preview_template)
+    def post(self, request, token):
         """Method for updating department"""
 
-        # Getting token from cookies
-        token = request.COOKIES.get("Token")
-        # If token is absent -> redirect to authorization
-        if not token:
-            return render(request, preview_template)
         # Form validation
         form = AddDepartmentForm(request.POST)
         if form.is_valid():
@@ -132,18 +116,14 @@ class DepartmentUpdateView(View):
 class DepartmentDeleteView(View):
     """Class for deleting departments """
 
-    def post(self, request):
+    @check_token(preview_template)
+    def post(self, request, token):
         """Method for deleting department"""
 
-        # Getting token from cookies
-        token = request.COOKIES.get("Token")
-        # If token is absent -> redirect to authorization
-        if not token:
-            return render(request, preview_template)
         # Deleting department
         api_request = requests.delete(request.POST['url'],
                                       headers={'Authorization': f'Token {token}'})
         if status.is_success(api_request.status_code):
             return redirect('home')
-        # If status != success -> rise ServerError
+        # If status != success -> raise ServerError
         return HttpResponseServerError()

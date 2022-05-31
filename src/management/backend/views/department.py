@@ -8,7 +8,6 @@ from ..serializers.department import DepartmentSerializer, DepartmentDetailSeria
 class DepartmentViewSet(ViewSet):
     """A class that describes all available methods with a department model"""
 
-
     def list(self, request):
         """The method displays all records"""
         queryset = Department.objects.all()

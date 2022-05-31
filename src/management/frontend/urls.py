@@ -12,6 +12,7 @@ urlpatterns = [
     path('department/create', department.DepartmentCreateView.as_view(), name='department-create'),
     # Employee urls
     path('employee/list', employee.EmployeeListView.as_view(), name='employee-list'),
+    path('employee/create', employee.EmployeeCreateView.as_view(), name='employee-create'),
     # Auth urls
     path('authorization/', authorization.AuthorizationView.as_view(), name='authorization'),
     path('registration/', registration.RegistrationView.as_view(), name='registration'),
