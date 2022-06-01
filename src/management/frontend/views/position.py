@@ -2,27 +2,31 @@ from django.http import HttpResponseServerError
 from rest_framework import status
 from django.shortcuts import render, redirect
 from django.views.generic import View
+
 import requests
 
-from frontend.forms.department.add import AddDepartmentForm
+from frontend.forms.position.add import AddPositionForm
 from frontend.check_token import check_token
 
+url_employee_list = 'http://127.0.0.1:8000/api/v1/employee/'
+url_position_list = 'http://127.0.0.1:8000/api/v1/position/'
 url_department_list = 'http://127.0.0.1:8000/api/v1/department/'
 url_user_permissions = 'http://127.0.0.1:8000/api/v1/permissions/'
-list_template = 'department/list.html'
-add_template = 'department/add.html'
-update_template = 'department/update.html'
+list_template = 'position/list.html'
+add_template = 'position/add.html'
+update_template = 'position/update.html'
 preview_template = 'auth/preview.html'
 
 
-class DepartmentListView(View):
-    """Class for rendering the home page of departments"""
+class PositionListView(View):
+    """Class for rendering the home page of positions"""
 
-    @check_token(html_to_render=preview_template)
+    @check_token(preview_template)
     def get(self, request, token):
-        """Method for getting the list of departments"""
+        """Method for getting the list of positions"""
 
-        api_request = requests.get(url_department_list,
+        # Getting list of positions
+        api_request = requests.get(url_position_list,
                                    headers={'Authorization': f'Token {token}'})
 
         if status.is_success(api_request.status_code):
@@ -35,44 +39,32 @@ class DepartmentListView(View):
         # If status != success -> raise ServerError
         return HttpResponseServerError()
 
-# class DepartmentDetailView(View):
-#     """Class for showing detail list of departments"""
-#
-#     def post(self, request):
-#         # Getting token from cookies
-#         token = request.COOKIES.get("Token")
-#         # If token is absent -> redirect to authorization
-#         if not token:
-#             return render(request, preview_template)
-#         # Getting detail list of departments
-#         api_request = requests.get(url,
-#                                    headers={'Authorization': f'Token {token}'})
 
-
-class DepartmentCreateView(View):
-    """Class for adding a new department"""
+class PositionCreateView(View):
+    """Class for adding a new position"""
 
     @check_token(preview_template)
     def get(self, request, token):
-        form = AddDepartmentForm
+        form = AddPositionForm
         return render(request, add_template, {'form': form})
 
     @check_token(preview_template)
     def post(self, request, token):
-        """Method for adding a new department"""
+        """Method for adding a new position"""
 
         # Form validation
-        form = AddDepartmentForm(request.POST)
+        form = AddPositionForm(request.POST)
         if form.is_valid():
-            # Adding new department
-            api_request = requests.post(url_department_list,
+            # Adding new position
+            api_request = requests.post(url_position_list,
                                         headers={'Authorization': f'Token {token}'},
                                         files={'title': (None, form.data['title']),
-                                               'description': (None, form.data['description'])}
+                                               'max_salary': (None, form.data['max_salary']),
+                                               'active': (None, form.data.get('active', False))}
                                         )
 
             if status.is_success(api_request.status_code):
-                return redirect('home')
+                return redirect('position-list')
             return render(request, add_template, {'form': form,
                                                   'status': api_request.json()})
         else:
@@ -80,32 +72,33 @@ class DepartmentCreateView(View):
                                                   'errors': form.errors})
 
 
-class DepartmentUpdateView(View):
-    """Class for updating departments """
+class PositionUpdateView(View):
+    """Class for updating positions """
 
     @check_token(preview_template)
     def get(self, request, token):
-        # Using AddDepartment form
-        form = AddDepartmentForm(request.GET)
+        # Using AddPosition form
+        form = AddPositionForm(request.GET)
         return render(request, update_template, {'form': form,
                                                  'url': request.GET['url']})
 
     @check_token(preview_template)
     def post(self, request, token):
-        """Method for updating department"""
+        """ Method for updating positions """
 
         # Form validation
-        form = AddDepartmentForm(request.POST)
+        form = AddPositionForm(request.POST)
         if form.is_valid():
-            # Updating department
+            # Updating position
             api_request = requests.put(request.POST['url'],
                                        headers={'Authorization': f'Token {token}'},
                                        files={'title': (None, form.data['title']),
-                                              'description': (None, form.data['description'])}
+                                              'max_salary': (None, form.data['max_salary']),
+                                              'active': (None, form.data.get('active', False))}
                                        )
 
             if status.is_success(api_request.status_code):
-                return redirect('home')
+                return redirect('position-list')
             # If status != success -> show errors
             return render(request, update_template, {'form': form,
                                                      'url': request.POST['url'],
@@ -115,17 +108,17 @@ class DepartmentUpdateView(View):
                                                   'errors': form.errors})
 
 
-class DepartmentDeleteView(View):
-    """Class for deleting departments """
+class PositionDeleteView(View):
+    """Class for deleting positions """
 
     @check_token(preview_template)
     def post(self, request, token):
-        """Method for deleting department"""
+        """Method for deleting positions"""
 
-        # Deleting department
+        # Deleting position
         api_request = requests.delete(request.POST['url'],
                                       headers={'Authorization': f'Token {token}'})
         if status.is_success(api_request.status_code):
-            return redirect('home')
+            return redirect('position-list')
         # If status != success -> raise ServerError
         return HttpResponseServerError()

@@ -1,15 +1,15 @@
 {% extends 'layout.html' %}
 
-{% block title %}Employee{% endblock %}
+{% block title %}Vacation{% endblock %}
 
 {% block with_partition_name %}
-<span style="font-family: Arial Black;"><h4>Employee list</h4></span>
+<span style="font-family: Arial Black;"><h4>Vacation list</h4></span>
 {% endblock %}
 
 {% block with_button_add %}
-{% if "backend.add_employee" in permissions %}
+{% if "backend.add_vacation" in permissions %}
 
-    <a href="{% url 'employee-create' %}" role="button" class="btn btn-success">
+    <a href="{% url 'vacation-create' %}" role="button" class="btn btn-success">
         Add
     </a>
 
@@ -19,8 +19,8 @@
 {% block with_description %}
 <th align="left" style="font-size: 15pt"><u>First name</u></th>
 <th align="left" style="font-size: 15pt"><u>Second name</u></th>
-<th align="left" style="font-size: 15pt"><u>Department</u></th>
-<th align="left" style="font-size: 15pt"><u>Position</u></th>
+<th align="left" style="font-size: 15pt"><u>Start date</u></th>
+<th align="left" style="font-size: 15pt"><u>End date</u></th>
 <th></th>
 {% endblock %}
 
@@ -28,29 +28,27 @@
 {% if content %}
 {% for i in content %}
 <tr>
-    <td style="font-size: 14pt">{{ i.first_name }}</td>
-    <td style="font-size: 14pt">{{ i.second_name }}</td>
-    <td style="font-size: 14pt">{{ i.department }}</td>
-    <td style="font-size: 14pt">{{ i.position }}</td>
+    <td style="font-size: 14pt">{{ i.employee }}</td>
+    <td style="font-size: 14pt">{{ i.employee_second_name }}</td>
+    <td style="font-size: 14pt">{{ i.start_date}}</td>
+    <td style="font-size: 14pt">{{ i.end_date }}</td>
 
     <td align="center">
-        <form id='detail'>
-            <button type="button" form="detail" class="btn btn-outline-primary btn-sm mb-2"> detail</button>
-        </form>
+    {% if "backend.change_vacation" in permissions %}
 
-    {% if "backend.change_employee" in permissions %}
-
-       <form method="get" action="{% url 'employee-update' %}">
+       <form method="get" action="{% url 'vacation-update' %}">
         {% csrf_token %}
         <input type="hidden" name="url" value="{{ i.url }}">
+        <input type="hidden" name="start_date" value="{{ i.start_date }}">
+        <input type="hidden" name="end_date" value="{{ i.end_date }}">
         <button class="btn btn-info btn-sm mb-2">Update</button>
        </form>
 
     {% endif %}
 
-    {% if "backend.delete_employee" in permissions %}
+    {% if "backend.delete_vacation" in permissions %}
 
-        <form method="post" action="{% url 'employee-delete' %}">
+        <form method="post" action="{% url 'vacation-delete' %}">
             {% csrf_token %}
             <input type="hidden" name="url" value="{{ i.url }}">
             <button type="submit" class="btn btn-danger btn-sm mb-2">Delete</button>

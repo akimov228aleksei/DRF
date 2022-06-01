@@ -34,4 +34,5 @@ class RegistrationView(View):
             return render(request, self.template_name, {'form': form,
                                                         'status': api_request.json()})
         else:
-            return render(request, self.template_name, {'form': form})
+            return render(request, self.template_name, {'form': form,
+                                                        'errors': form.errors})

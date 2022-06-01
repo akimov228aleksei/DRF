@@ -7,7 +7,7 @@ class PositionSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Position
-        fields = ('url', 'title', 'active', 'time_create')
+        fields = ('id', 'url', 'title', 'active', 'time_create', 'max_salary')
 
 
 class PositionDetailSerializer(serializers.ModelSerializer):
