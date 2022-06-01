@@ -94,6 +94,7 @@ class TestDepartmentViewsAPI(APITestCase):
                                     content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, {'url': f"http://testserver{reverse('department-detail', kwargs={'pk': 2})}",
+                                         'id': 2,
                                          'title': 'Some department',
                                          'description': 'Description about some department',
                                          'time_create': f'{date.today()}',
@@ -112,6 +113,7 @@ class TestDepartmentViewsAPI(APITestCase):
                                    content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, {'url': f"http://testserver{reverse('department-detail', kwargs={'pk': 1})}",
+                                         'id': 1,
                                          'title': 'Some updated department',
                                          'description': 'Description about some updated department',
                                          'time_create': f'{date.today()}',
