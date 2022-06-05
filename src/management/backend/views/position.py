@@ -14,7 +14,7 @@ class PositionViewSet(ViewSet):
         """The method that generates the queryset"""
         queryset = Position.objects.all()
         # If query parameter 'active' == True -> show only active records
-        if self.request.query_params.get('active'):
+        if eval(self.request.query_params.get('active')):
             queryset = Position.objects.filter(active=True)
         return queryset
 
