@@ -111,16 +111,12 @@ class VacationUpdateView(View):
             # Updating vacation
             api_request = requests.put(request.POST['url'],
                                        headers={'Authorization': f'Token {token}'},
-                                       files={'first_name': (None, form.data['first_name']),
-                                              'second_name': (None, form.data['second_name']),
-                                              'birthday': (None, form.data['birthday']),
-                                              'department': (None, request.POST['department']),
-                                              'position': (None, request.POST['position']),
-                                              'salary': (None, form.data['salary']),
-                                              'on_boarding_day': (None, form.data['on_boarding_day'])
-                                              })
+                                       files={'employee': (None, request.POST['employee']),
+                                               'start_date': (None, form.data['start_date']),
+                                               'end_date': (None, form.data['end_date'])
+                                               })
             if status.is_success(api_request.status_code):
-                return redirect('employee-list')
+                return redirect('vacation-list')
             # If status != success -> show errors
             return render(request, update_template, {'form': form,
                                                      'url': request.POST['url'],
