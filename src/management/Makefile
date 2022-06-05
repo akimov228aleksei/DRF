@@ -7,3 +7,6 @@ init_app:
 run_migrations:
 	./manage.py makemigrations
 	./manage.py migrate
+
+run:
+	./manage.py runserver
