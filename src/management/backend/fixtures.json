@@ -90,5 +90,33 @@
       "name": "personal",
       "permissions": []
     }
-  }
+  },
+  {
+    "model": "auth.group",
+    "pk": 2,
+    "fields": {
+      "name": "manager",
+      "permissions": [25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "password": "1234",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "manager",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2022-06-06T09:32:50.998Z",
+      "groups": [
+        2
+      ],
+      "user_permissions": []
+    }
+    }
 ]

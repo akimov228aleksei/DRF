@@ -25,15 +25,19 @@ class PositionListView(View):
     def get(self, request, token):
         """Method for getting the list of positions"""
 
-        # Getting list of positions
-        api_request = requests.get(url_position_list,
+        # Getting user permissions
+        permissions = requests.get(url_user_permissions,
                                    headers={'Authorization': f'Token {token}'})
 
-        if status.is_success(api_request.status_code):
-            # Getting user permissions
-            permissions = requests.get(url_user_permissions,
-                                       headers={'Authorization': f'Token {token}'})
+        # If user has permissions -> show all records
+        is_active = ('backend.delete_position' or 'backend.change_position') not in permissions.json()
 
+        # Getting list of positions
+        api_request = requests.get(url_position_list,
+                                   headers={'Authorization': f'Token {token}'},
+                                   params={'active': is_active})
+
+        if status.is_success(api_request.status_code):
             return render(request, list_template, {'content': api_request.json(),
                                                    'permissions': permissions.json()})
         # If status != success -> raise ServerError

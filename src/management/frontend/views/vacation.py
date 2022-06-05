@@ -25,6 +25,8 @@ class VacationListView(View):
     def get(self, request, token):
         """Method for getting the list of vacation"""
 
+        permissions = requests.get(url_user_permissions,
+                                   headers={'Authorization': f'Token {token}'})
         # Getting list of vacation
         api_request = requests.get(url_vacation_list,
                                    headers={'Authorization': f'Token {token}'})
