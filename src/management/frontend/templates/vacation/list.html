@@ -3,13 +3,13 @@
 {% block title %}Vacation{% endblock %}
 
 {% block with_partition_name %}
-<span style="font-family: Arial Black;"><h3>Vacation list</h4></span>
+<span style="font-family: Arial Black;"><h3>Vacation list</h3></span>
 {% endblock %}
 
 {% block with_button_add %}
 {% if "backend.add_vacation" in permissions %}
 
-    <a href="{% url 'vacation-create' %}" role="button" class="btn btn-success">
+    <a href="{% url 'vacation_create' %}" role="button" class="btn btn-success">
         Add
     </a>
 
@@ -36,7 +36,7 @@
     <td align="center">
     {% if "backend.change_vacation" in permissions %}
 
-       <form method="get" action="{% url 'vacation-update' %}">
+       <form method="get" action="{% url 'vacation_update' %}">
         {% csrf_token %}
         <input type="hidden" name="url" value="{{ i.url }}">
         <input type="hidden" name="start_date" value="{{ i.start_date }}">
@@ -48,7 +48,7 @@
 
     {% if "backend.delete_vacation" in permissions %}
 
-        <form method="post" action="{% url 'vacation-delete' %}">
+        <form method="post" action="{% url 'vacation_delete' %}">
             {% csrf_token %}
             <input type="hidden" name="url" value="{{ i.url }}">
             <button type="submit" class="btn btn-danger btn-sm mb-2">Delete</button>

@@ -3,13 +3,13 @@
 {% block title %}Position{% endblock %}
 
 {% block with_partition_name %}
-<span style="font-family: Arial Black;"><h3>Position list</h4></span>
+<span style="font-family: Arial Black;"><h3>Position list</h3></span>
 {% endblock %}
 
 {% block with_button_add %}
 {% if "backend.add_position" in permissions %}
 
-    <a href="{% url 'position-create' %}" role="button" class="btn btn-success">
+    <a href="{% url 'position_create' %}" role="button" class="btn btn-success">
         Add
     </a>
 
@@ -37,7 +37,7 @@
 
     {% if "backend.change_position" in permissions %}
 
-       <form method="get" action="{% url 'position-update' %}">
+       <form method="get" action="{% url 'position_update' %}">
         {% csrf_token %}
         <input type="hidden" name="url" value="{{ i.url }}">
         <input type="hidden" name="title" value="{{ i.title }}">
@@ -49,7 +49,7 @@
 
     {% if "backend.delete_position" in permissions %}
 
-        <form method="post" action="{% url 'position-delete' %}">
+        <form method="post" action="{% url 'position_delete' %}">
             {% csrf_token %}
             <input type="hidden" name="url" value="{{ i.url }}">
             <button type="submit" class="btn btn-danger btn-sm mb-2">Delete</button>

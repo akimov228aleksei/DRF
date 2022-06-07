@@ -12,7 +12,7 @@
     <title>Adding employee</title>
 </head>
 <body>
-<form action="{% url 'employee-create' %}" method="post">
+<form action="{% url 'employee_create' %}" method="post">
     <div style="margin-left: 30%; margin-top: 5%;">
     {% csrf_token %}
     {% for field in form %}
@@ -27,7 +27,7 @@
     {% endfor %}
     {{ errors }}
     <input type="submit" class="btn btn-primary mb-2" value="Create">
-    <a href="{% url 'employee-list' %}" role="button" class="btn btn-danger mb-2">Cancel</a>
+    <a href="{% url 'employee_list' %}" role="button" class="btn btn-danger mb-2">Cancel</a>
     <br/>
     {% if status %}
         {% for key, value in status.items %}

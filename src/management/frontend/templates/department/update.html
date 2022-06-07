@@ -12,7 +12,7 @@
     <title>Updating department</title>
 </head>
 <body>
-<form action="{% url 'department-update' %}" method="post">
+<form action="{% url 'department_update' %}" method="post">
     <div style="margin-left: 30%; margin-top: 5%;">
     {% csrf_token %}
     {% for field in form %}

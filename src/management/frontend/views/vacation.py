@@ -75,7 +75,7 @@ class VacationCreateView(View):
                                         )
 
             if status.is_success(api_request.status_code):
-                return redirect('vacation-list')
+                return redirect('vacation_list')
             return render(request, add_template, {'form': form,
                                                   'status': api_request.json()})
         else:
@@ -118,7 +118,7 @@ class VacationUpdateView(View):
                                               'end_date': (None, form.data['end_date'])
                                               })
             if status.is_success(api_request.status_code):
-                return redirect('vacation-list')
+                return redirect('vacation_list')
             # If status != success -> show errors
             return render(request, update_template, {'form': form,
                                                      'url': request.POST['url'],
@@ -139,6 +139,6 @@ class VacationDeleteView(View):
         api_request = requests.delete(request.POST['url'],
                                       headers={'Authorization': f'Token {token}'})
         if status.is_success(api_request.status_code):
-            return redirect('vacation-list')
+            return redirect('vacation_list')
         # If status != success -> raise ServerError
         return HttpResponseServerError()

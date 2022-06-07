@@ -12,7 +12,7 @@
     <title>Adding department</title>
 </head>
 <body>
-<form action="{% url 'department-create' %}" method="post">
+<form action="{% url 'department_create' %}" method="post">
     <div style="margin-left: 30%; margin-top: 5%;">
     {% csrf_token %}
     {% for field in form %}

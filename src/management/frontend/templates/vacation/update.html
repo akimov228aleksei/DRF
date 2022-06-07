@@ -12,7 +12,7 @@
     <title>Updating vacation</title>
 </head>
 <body>
-<form action="{% url 'vacation-update' %}" method="post">
+<form action="{% url 'vacation_update' %}" method="post">
     <div style="margin-left: 30%; margin-top: 5%;">
     {% csrf_token %}
     {% for field in form %}
@@ -27,7 +27,7 @@
     {{ errors }}
     <input type="hidden" name="url" value="{{ url }}">
     <input type="submit" class="btn btn-primary mb-2" value="Update">
-    <a href="{% url 'vacation-list' %}" role="button" class="btn btn-danger mb-2">Cancel</a>
+    <a href="{% url 'vacation_list' %}" role="button" class="btn btn-danger mb-2">Cancel</a>
     <br/>
     {{ errors }}
     {% if status %}

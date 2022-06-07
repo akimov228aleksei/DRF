@@ -96,7 +96,7 @@ class EmployeeCreateView(View):
                                         )
 
             if status.is_success(api_request.status_code):
-                return redirect('employee-list')
+                return redirect('employee_list')
             return render(request, add_template, {'form': form,
                                                   'status': api_request.json()})
         else:
@@ -149,7 +149,7 @@ class EmployeeUpdateView(View):
                                               'on_boarding_day': (None, form.data['on_boarding_day'])
                                               })
             if status.is_success(api_request.status_code):
-                return redirect('employee-list')
+                return redirect('employee_list')
             # If status != success -> show errors
             return render(request, update_template, {'form': form,
                                                      'url': request.POST['url'],
@@ -170,6 +170,6 @@ class EmployeeDeleteView(View):
         api_request = requests.delete(request.POST['url'],
                                       headers={'Authorization': f'Token {token}'})
         if status.is_success(api_request.status_code):
-            return redirect('employee-list')
+            return redirect('employee_list')
         # If status != success -> raise ServerError
         return HttpResponseServerError()

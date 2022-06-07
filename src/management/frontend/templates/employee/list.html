@@ -9,7 +9,7 @@
 {% block with_button_add %}
 {% if "backend.add_employee" in permissions %}
 
-    <a href="{% url 'employee-create' %}" role="button" class="btn btn-success">
+    <a href="{% url 'employee_create' %}" role="button" class="btn btn-success">
         Add
     </a>
 
@@ -34,14 +34,14 @@
     <td style="font-size: 16pt">{{ i.position }}</td>
 
     <td align="center">
-        <form method="get" action="{% url 'employee-detail' %}">
+        <form method="get" action="{% url 'employee_detail' %}">
             <input type="hidden" name="url" value="{{ i.url }}">
             <button type="submit" class="btn btn-outline-primary btn-sm mb-2"> detail</button>
         </form>
 
     {% if "backend.change_employee" in permissions %}
 
-       <form method="get" action="{% url 'employee-update' %}">
+       <form method="get" action="{% url 'employee_update' %}">
         {% csrf_token %}
         <input type="hidden" name="url" value="{{ i.url }}">
         <button class="btn btn-info btn-sm mb-2">Update</button>
@@ -51,7 +51,7 @@
 
     {% if "backend.delete_employee" in permissions %}
 
-        <form method="post" action="{% url 'employee-delete' %}">
+        <form method="post" action="{% url 'employee_delete' %}">
             {% csrf_token %}
             <input type="hidden" name="url" value="{{ i.url }}">
             <button type="submit" class="btn btn-danger btn-sm mb-2">Delete</button>

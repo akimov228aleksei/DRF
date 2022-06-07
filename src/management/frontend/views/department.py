@@ -25,7 +25,6 @@ class DepartmentListView(View):
 
         api_request = requests.get(url_department_list,
                                    headers={'Authorization': f'Token {token}'})
-
         if status.is_success(api_request.status_code):
             # Getting user permissions
             permissions = requests.get(url_user_permissions,

@@ -9,7 +9,7 @@
 {% block with_button_add %}
 {% if "backend.add_department" in permissions %}
 
-    <a href="{% url 'department-create' %}" role="button" class="btn btn-success">
+    <a href="{% url 'department_create' %}" role="button" class="btn btn-success">
         Add
     </a>
 
@@ -34,14 +34,14 @@
     <td style="font-size: 16pt">{{ i.time_update|slice:":10"}}</td>
 
     <td align="center">
-        <form method="get" action="{% url 'department-detail' %}">
+        <form method="get" action="{% url 'department_detail' %}">
             <input type="hidden" name="url" value="{{ i.url }}">
             <button type="submit" class="btn btn-outline-primary btn-sm mb-2"> detail</button>
         </form>
 
     {% if "backend.change_department" in permissions %}
 
-       <form method="get" action="{% url 'department-update' %}">
+       <form method="get" action="{% url 'department_update' %}">
         {% csrf_token %}
         <input type="hidden" name="url" value="{{ i.url }}">
         <input type="hidden" name="title" value="{{ i.title }}">
@@ -53,7 +53,7 @@
 
     {% if "backend.delete_department" in permissions %}
 
-        <form method="post" action="{% url 'department-delete' %}">
+        <form method="post" action="{% url 'department_delete' %}">
             {% csrf_token %}
             <input type="hidden" name="url" value="{{ i.url }}">
             <button type="submit" class="btn btn-danger btn-sm mb-2">Delete</button>
