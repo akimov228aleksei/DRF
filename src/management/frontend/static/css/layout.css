@@ -1,5 +1,10 @@
+table {
+    table-layout: fixed;
+    width:100%
+}
+
 td {
-    white-space: nowrap;
+    word-wrap:break-word;
     border: 1px solid #666;
 }
 

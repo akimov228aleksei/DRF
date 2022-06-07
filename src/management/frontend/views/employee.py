@@ -14,6 +14,7 @@ url_position_list = 'http://127.0.0.1:8000/api/v1/position/'
 url_department_list = 'http://127.0.0.1:8000/api/v1/department/'
 url_user_permissions = 'http://127.0.0.1:8000/api/v1/permissions/'
 list_template = 'employee/list.html'
+detail_template = 'employee/detail.html'
 add_template = 'employee/add.html'
 update_template = 'employee/update.html'
 preview_template = 'auth/preview.html'
@@ -37,6 +38,19 @@ class EmployeeListView(View):
 
             return render(request, list_template, {'content': api_request.json(),
                                                    'permissions': permissions.json()})
+        # If status != success -> raise ServerError
+        return HttpResponseServerError()
+
+
+class EmployeeDetailView(View):
+    """Class for showing detail list of employees"""
+
+    @check_token(preview_template)
+    def get(self, request, token):
+        api_request = requests.get(request.GET['url'],
+                                   headers={'Authorization': f'Token {token}'})
+        if status.is_success(api_request.status_code):
+            return render(request, detail_template, {'content': api_request.json()})
         # If status != success -> raise ServerError
         return HttpResponseServerError()
 

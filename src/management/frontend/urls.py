@@ -10,11 +10,13 @@ urlpatterns = [
     path('department/update', department.DepartmentUpdateView.as_view(), name='department-update'),
     path('department/delete', department.DepartmentDeleteView.as_view(), name='department-delete'),
     path('department/create', department.DepartmentCreateView.as_view(), name='department-create'),
+    path('department/detail', department.DepartmentDetailView.as_view(), name='department-detail'),
     # Employee urls
     path('employee/list', employee.EmployeeListView.as_view(), name='employee-list'),
     path('employee/create', employee.EmployeeCreateView.as_view(), name='employee-create'),
     path('employee/update', employee.EmployeeUpdateView.as_view(), name='employee-update'),
     path('employee/delete', employee.EmployeeDeleteView.as_view(), name='employee-delete'),
+    path('employee/detail', employee.EmployeeDetailView.as_view(), name='employee-detail'),
     # Position urls
     path('position/list', position.PositionListView.as_view(), name='position-list'),
     path('position/create', position.PositionCreateView.as_view(), name='position-create'),

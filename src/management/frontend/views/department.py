@@ -12,6 +12,7 @@ url_user_permissions = 'http://127.0.0.1:8000/api/v1/permissions/'
 list_template = 'department/list.html'
 add_template = 'department/add.html'
 update_template = 'department/update.html'
+detail_template = 'department/detail.html'
 preview_template = 'auth/preview.html'
 
 
@@ -35,18 +36,18 @@ class DepartmentListView(View):
         # If status != success -> raise ServerError
         return HttpResponseServerError()
 
-# class DepartmentDetailView(View):
-#     """Class for showing detail list of departments"""
-#
-#     def post(self, request):
-#         # Getting token from cookies
-#         token = request.COOKIES.get("Token")
-#         # If token is absent -> redirect to authorization
-#         if not token:
-#             return render(request, preview_template)
-#         # Getting detail list of departments
-#         api_request = requests.get(url,
-#                                    headers={'Authorization': f'Token {token}'})
+
+class DepartmentDetailView(View):
+    """Class for showing detail list of departments"""
+
+    @check_token(preview_template)
+    def get(self, request, token):
+        api_request = requests.get(request.GET['url'],
+                                   headers={'Authorization': f'Token {token}'})
+        if status.is_success(api_request.status_code):
+            return render(request, detail_template, {'content': api_request.json()})
+        # If status != success -> raise ServerError
+        return HttpResponseServerError()
 
 
 class DepartmentCreateView(View):

@@ -18,10 +18,10 @@
     <tr>
         <th colspan="4">
         <div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
-            <a href="{% url 'home' %}" role="button" class="btn btn-secondary">Departments</a>
-            <a href="{% url 'employee-list' %}" role="button" class="btn btn-secondary">Employees</a>
-            <a href="{% url 'position-list' %}" role="button" class="btn btn-secondary">Positions</a>
-            <a href="{% url 'vacation-list' %}" role="button" class="btn btn-secondary">Vacation</a>
+            <a href="{% url 'home' %}" role="button" class="btn btn-secondary"><h4>Departments</h4></a>
+            <a href="{% url 'employee-list' %}" role="button" class="btn btn-secondary"><h4>Employees</h4></a>
+            <a href="{% url 'position-list' %}" role="button" class="btn btn-secondary"><h4>Positions</h4></a>
+            <a href="{% url 'vacation-list' %}" role="button" class="btn btn-secondary"><h4>Vacation</h4></a>
         </div>
         </th>
         <th>
@@ -37,7 +37,7 @@
             {% block with_button_add %}{% endblock %}
         </th>
     </tr>
-    <tr>{% block with_description %}{% endblock %}
+    <tr style="border-bottom: 3px solid black;">{% block with_description %}{% endblock %}
     </tr>
     </thead>
     </table>

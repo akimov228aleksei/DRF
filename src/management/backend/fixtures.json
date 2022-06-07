@@ -103,7 +103,7 @@
     "model": "auth.user",
     "pk": 1,
     "fields": {
-      "password": "1234",
+      "password": "pbkdf2_sha256$260000$JjHORbpQwOklWuQR1utl73$vgLqN5LZY+ben4NWV5PkXrgFS/jdw/CfvIFYZcrOsqY=",
       "last_login": null,
       "is_superuser": false,
       "username": "manager",

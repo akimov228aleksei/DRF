@@ -16,7 +16,7 @@ from ..serializers.vacation import VacationSerializer, VacationDetailSerializer
 
 class TestVacationViewsAPI(APITestCase):
     VALID_DATA = {
-        'employee': 1,
+        'employee': 2,
         'start_date': '2022-07-01',
         'end_date': '2022-07-23'
     }
@@ -54,6 +54,12 @@ class TestVacationViewsAPI(APITestCase):
                                                 department=self.department,
                                                 position=self.position,
                                                 salary=2000)
+        self.employee_2 = Employee.objects.create(first_name='Petr',
+                                                  second_name='Petrov',
+                                                  birthday='2010-03-03',
+                                                  department=self.department,
+                                                  position=self.position,
+                                                  salary=3000)
         self.vacation = Vacation.objects.create(employee=self.employee,
                                                 start_date='2022-02-02',
                                                 end_date='2022-03-03')
@@ -110,9 +116,9 @@ class TestVacationViewsAPI(APITestCase):
                                     content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, {'id': 2,
-                                         'employee_first_name': self.employee.first_name,
-                                         'employee_second_name': self.employee.second_name,
-                                         'employee': self.employee.pk,
+                                         'employee_first_name': self.employee_2.first_name,
+                                         'employee_second_name': self.employee_2.second_name,
+                                         'employee': self.employee_2.pk,
                                          'start_date': '2022-07-01',
                                          'end_date': '2022-07-23'})
 
