@@ -95,15 +95,43 @@
     "model": "auth.group",
     "pk": 2,
     "fields": {
-      "name": "manager",
+      "name": "administrator",
       "permissions": [25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]
+    }
+  },
+  {
+    "model": "auth.group",
+    "pk": 3,
+    "fields": {
+      "name": "manager",
+      "permissions": [25,26,28,29,30,32,33,34,36,37,38,40]
     }
   },
   {
     "model": "auth.user",
     "pk": 1,
     "fields": {
-      "password": "pbkdf2_sha256$260000$JjHORbpQwOklWuQR1utl73$vgLqN5LZY+ben4NWV5PkXrgFS/jdw/CfvIFYZcrOsqY=",
+      "password": "pbkdf2_sha256$260000$fbxoFPLhmYyiTKDRrAwvdf$fNMZsmcJSxJRC1EVwnzAqQLDAErQ3PVsZB1tgCkYZ00=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "admin",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2022-06-06T09:32:50.998Z",
+      "groups": [
+        2
+      ],
+      "user_permissions": []
+    }
+    },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$f9XmGsmr16SfHuvTf9AKmX$rCPK3oev8aNxYiprXiMHYE8GUygtujUBZq4CrnbQv2U=",
       "last_login": null,
       "is_superuser": false,
       "username": "manager",
@@ -114,7 +142,7 @@
       "is_active": true,
       "date_joined": "2022-06-06T09:32:50.998Z",
       "groups": [
-        2
+        3
       ],
       "user_permissions": []
     }
