@@ -93,7 +93,7 @@ class VacationUpdateView(View):
 
         form = AddVacationForm(employee_list=[(employee.get('id'), f"""{employee.get('first_name')} 
                                                     {employee.get('second_name')}""")
-                               for employee in employees.json()],
+                                              for employee in employees.json()],
                                data=request.GET)
         # Using AddVacationForm
         return render(request, update_template, {'form': form,
@@ -114,9 +114,9 @@ class VacationUpdateView(View):
             api_request = requests.put(request.POST['url'],
                                        headers={'Authorization': f'Token {token}'},
                                        files={'employee': (None, request.POST['employee']),
-                                               'start_date': (None, form.data['start_date']),
-                                               'end_date': (None, form.data['end_date'])
-                                               })
+                                              'start_date': (None, form.data['start_date']),
+                                              'end_date': (None, form.data['end_date'])
+                                              })
             if status.is_success(api_request.status_code):
                 return redirect('vacation-list')
             # If status != success -> show errors

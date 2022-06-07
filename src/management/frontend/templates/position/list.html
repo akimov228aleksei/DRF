@@ -3,7 +3,7 @@
 {% block title %}Position{% endblock %}
 
 {% block with_partition_name %}
-<span style="font-family: Arial Black;"><h4>Position list</h4></span>
+<span style="font-family: Arial Black;"><h3>Position list</h4></span>
 {% endblock %}
 
 {% block with_button_add %}
@@ -17,10 +17,10 @@
 {% endblock %}
 
 {% block with_description %}
-<th align="left" style="font-size: 15pt"><u>Title</u></th>
-<th align="left" style="font-size: 15pt"><u>Is active</u></th>
-<th align="left" style="font-size: 15pt"><u>Max salary</u></th>
-<th align="left" style="font-size: 15pt"><u>Time create</u></th>
+<th align="left" style="font-size: 17pt"><u>Title</u></th>
+<th align="left" style="font-size: 17pt"><u>Is active</u></th>
+<th align="left" style="font-size: 17pt"><u>Max salary</u></th>
+<th align="left" style="font-size: 17pt"><u>Time create</u></th>
 <th></th>
 {% endblock %}
 
@@ -28,10 +28,10 @@
 {% if content %}
 {% for i in content %}
 <tr>
-    <td style="font-size: 14pt">{{ i.title }}</td>
-    <td style="font-size: 14pt">{{ i.active }}</td>
-    <td style="font-size: 14pt">{{ i.max_salary }}</td>
-    <td style="font-size: 14pt">{{ i.time_create }}</td>
+    <td style="font-size: 16pt">{{ i.title }}</td>
+    <td style="font-size: 16pt">{{ i.active }}</td>
+    <td style="font-size: 16pt">{{ i.max_salary }}</td>
+    <td style="font-size: 16pt">{{ i.time_create }}</td>
 
     <td align="center">
 

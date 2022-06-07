@@ -3,7 +3,7 @@
 {% block title %}Vacation{% endblock %}
 
 {% block with_partition_name %}
-<span style="font-family: Arial Black;"><h4>Vacation list</h4></span>
+<span style="font-family: Arial Black;"><h3>Vacation list</h4></span>
 {% endblock %}
 
 {% block with_button_add %}
@@ -17,10 +17,10 @@
 {% endblock %}
 
 {% block with_description %}
-<th align="left" style="font-size: 15pt"><u>First name</u></th>
-<th align="left" style="font-size: 15pt"><u>Second name</u></th>
-<th align="left" style="font-size: 15pt"><u>Start date</u></th>
-<th align="left" style="font-size: 15pt"><u>End date</u></th>
+<th align="left" style="font-size: 17pt"><u>First name</u></th>
+<th align="left" style="font-size: 17pt"><u>Second name</u></th>
+<th align="left" style="font-size: 17pt"><u>Start date</u></th>
+<th align="left" style="font-size: 17pt"><u>End date</u></th>
 <th></th>
 {% endblock %}
 
@@ -28,10 +28,10 @@
 {% if content %}
 {% for i in content %}
 <tr>
-    <td style="font-size: 14pt">{{ i.employee }}</td>
-    <td style="font-size: 14pt">{{ i.employee_second_name }}</td>
-    <td style="font-size: 14pt">{{ i.start_date}}</td>
-    <td style="font-size: 14pt">{{ i.end_date }}</td>
+    <td style="font-size: 16pt">{{ i.employee }}</td>
+    <td style="font-size: 16pt">{{ i.employee_second_name }}</td>
+    <td style="font-size: 16pt">{{ i.start_date}}</td>
+    <td style="font-size: 16pt">{{ i.end_date }}</td>
 
     <td align="center">
     {% if "backend.change_vacation" in permissions %}

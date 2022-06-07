@@ -30,7 +30,7 @@ class PositionListView(View):
                                    headers={'Authorization': f'Token {token}'})
 
         # If user has permissions -> show all records
-        is_active = ('backend.delete_position' or 'backend.change_position') not in permissions.json()
+        is_active = 'backend.change_position' not in permissions.json()
 
         # Getting list of positions
         api_request = requests.get(url_position_list,

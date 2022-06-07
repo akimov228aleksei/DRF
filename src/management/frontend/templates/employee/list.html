@@ -3,7 +3,7 @@
 {% block title %}Employee{% endblock %}
 
 {% block with_partition_name %}
-<span style="font-family: Arial Black;"><h4>Employee list</h4></span>
+<span style="font-family: Arial Black;"><h3>Employee list</h3></span>
 {% endblock %}
 
 {% block with_button_add %}
@@ -17,10 +17,10 @@
 {% endblock %}
 
 {% block with_description %}
-<th align="left" style="font-size: 15pt"><u>First name</u></th>
-<th align="left" style="font-size: 15pt"><u>Second name</u></th>
-<th align="left" style="font-size: 15pt"><u>Department</u></th>
-<th align="left" style="font-size: 15pt"><u>Position</u></th>
+<th align="left" style="font-size: 17pt"><u>First name</u></th>
+<th align="left" style="font-size: 17pt"><u>Second name</u></th>
+<th align="left" style="font-size: 17pt"><u>Department</u></th>
+<th align="left" style="font-size: 17pt"><u>Position</u></th>
 <th></th>
 {% endblock %}
 
@@ -28,10 +28,10 @@
 {% if content %}
 {% for i in content %}
 <tr>
-    <td style="font-size: 14pt">{{ i.first_name }}</td>
-    <td style="font-size: 14pt">{{ i.second_name }}</td>
-    <td style="font-size: 14pt">{{ i.department }}</td>
-    <td style="font-size: 14pt">{{ i.position }}</td>
+    <td style="font-size: 16pt">{{ i.first_name }}</td>
+    <td style="font-size: 16pt">{{ i.second_name }}</td>
+    <td style="font-size: 16pt">{{ i.department }}</td>
+    <td style="font-size: 16pt">{{ i.position }}</td>
 
     <td align="center">
         <form method="get" action="{% url 'employee-detail' %}">
