@@ -7,7 +7,7 @@ class DepartmentSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Department
-        fields = ('url', 'title', 'description')
+        fields = ('id', 'url', 'title', 'description', 'time_create', 'time_update')
 
 
 class DepartmentDetailSerializer(serializers.ModelSerializer):

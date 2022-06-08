@@ -31,7 +31,7 @@
     "fields": {
       "title": "Backend developers",
       "description": "Description about backend developers",
-      "time_create": "2022-03-31T13:46:53.491Z",
+      "time_create": "2022-03-31",
       "time_update": "2022-03-31T13:46:53.491Z"
     }
   },
@@ -41,7 +41,7 @@
     "fields": {
       "title": "Frontend developers",
       "description": "Description about frontend developers",
-      "time_create": "2022-03-31T13:46:53.491Z",
+      "time_create": "2022-03-31",
       "time_update": "2022-03-31T13:46:53.491Z"
     }
   },
@@ -82,5 +82,69 @@
       "start_date": "2022-07-07",
       "end_date": "2022-09-07"
     }
-  }
+  },
+   {
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+      "name": "personal",
+      "permissions": []
+    }
+  },
+  {
+    "model": "auth.group",
+    "pk": 2,
+    "fields": {
+      "name": "administrator",
+      "permissions": [25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]
+    }
+  },
+  {
+    "model": "auth.group",
+    "pk": 3,
+    "fields": {
+      "name": "manager",
+      "permissions": [25,26,28,29,30,32,33,34,36,37,38,40]
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$fbxoFPLhmYyiTKDRrAwvdf$fNMZsmcJSxJRC1EVwnzAqQLDAErQ3PVsZB1tgCkYZ00=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "admin",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2022-06-06T09:32:50.998Z",
+      "groups": [
+        2
+      ],
+      "user_permissions": []
+    }
+    },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$f9XmGsmr16SfHuvTf9AKmX$rCPK3oev8aNxYiprXiMHYE8GUygtujUBZq4CrnbQv2U=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "manager",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2022-06-06T09:32:50.998Z",
+      "groups": [
+        3
+      ],
+      "user_permissions": []
+    }
+    }
 ]
