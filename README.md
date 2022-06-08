@@ -16,4 +16,5 @@
 
 2. Open directory where located __manage.py__ file.
 3. Use command `make init_app` to install all required dependencies.
-4. Use command `./manage.py runserver` to run server.
+4. Use command `make run` to run server.
+5. You can login as administrator using username `admin` and password `123_pw_admin`, or as manager using username `manager` and password `123_pw_manager`.

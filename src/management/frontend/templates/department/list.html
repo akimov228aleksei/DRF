@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+
+{% block title %}Department{% endblock %}
+
+{% block with_partition_name %}
+<span style="font-family: Arial Black;"><h3>Department list</h3></span>
+{% endblock %}
+
+{% block with_button_add %}
+{% if "backend.add_department" in permissions %}
+
+    <a href="{% url 'department_create' %}" role="button" class="btn btn-success">
+        Add
+    </a>
+
+{% endif %}
+{% endblock %}
+
+{% block with_description %}
+<th align="left" style="font-size: 17pt"><u>Title</u></th>
+<th align="left" style="font-size: 17pt"><u>Description</u></th>
+<th align="left" style="font-size: 17pt "><u>Date of create</u></th>
+<th align="left" style="font-size: 17pt"><u>Last Update</u></th>
+<th></th>
+{% endblock %}
+
+{% block content %}
+{% if content %}
+{% for i in content %}
+<tr>
+    <td style="font-size: 16pt">{{ i.title }}</td>
+    <td style="font-size: 16pt">{{ i.description }}</td>
+    <td style="font-size: 16pt">{{ i.time_create|slice:":10" }}</td>
+    <td style="font-size: 16pt">{{ i.time_update|slice:":10"}}</td>
+
+    <td align="center">
+        <form method="get" action="{% url 'department_detail' %}">
+            <input type="hidden" name="url" value="{{ i.url }}">
+            <button type="submit" class="btn btn-outline-primary btn-sm mb-2"> detail</button>
+        </form>
+
+    {% if "backend.change_department" in permissions %}
+
+       <form method="get" action="{% url 'department_update' %}">
+        {% csrf_token %}
+        <input type="hidden" name="url" value="{{ i.url }}">
+        <input type="hidden" name="title" value="{{ i.title }}">
+        <input type="hidden" name="description" value="{{ i.description }}">
+        <button class="btn btn-info btn-sm mb-2">Update</button>
+       </form>
+
+    {% endif %}
+
+    {% if "backend.delete_department" in permissions %}
+
+        <form method="post" action="{% url 'department_delete' %}">
+            {% csrf_token %}
+            <input type="hidden" name="url" value="{{ i.url }}">
+            <button type="submit" class="btn btn-danger btn-sm mb-2">Delete</button>
+        </form>
+    </td>
+    {% endif %}
+
+    </tr>
+
+{% endfor %}
+{% else %}
+<br>
+<p align="center" style="font-size: 30px">
+    No information available.
+</p>
+{% endif %}
+{% endblock %}

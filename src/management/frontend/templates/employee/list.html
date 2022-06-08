@@ -1,0 +1,71 @@
+{% extends 'layout.html' %}
+
+{% block title %}Employee{% endblock %}
+
+{% block with_partition_name %}
+<span style="font-family: Arial Black;"><h3>Employee list</h3></span>
+{% endblock %}
+
+{% block with_button_add %}
+{% if "backend.add_employee" in permissions %}
+
+    <a href="{% url 'employee_create' %}" role="button" class="btn btn-success">
+        Add
+    </a>
+
+{% endif %}
+{% endblock %}
+
+{% block with_description %}
+<th align="left" style="font-size: 17pt"><u>First name</u></th>
+<th align="left" style="font-size: 17pt"><u>Second name</u></th>
+<th align="left" style="font-size: 17pt"><u>Department</u></th>
+<th align="left" style="font-size: 17pt"><u>Position</u></th>
+<th></th>
+{% endblock %}
+
+{% block content %}
+{% if content %}
+{% for i in content %}
+<tr>
+    <td style="font-size: 16pt">{{ i.first_name }}</td>
+    <td style="font-size: 16pt">{{ i.second_name }}</td>
+    <td style="font-size: 16pt">{{ i.department }}</td>
+    <td style="font-size: 16pt">{{ i.position }}</td>
+
+    <td align="center">
+        <form method="get" action="{% url 'employee_detail' %}">
+            <input type="hidden" name="url" value="{{ i.url }}">
+            <button type="submit" class="btn btn-outline-primary btn-sm mb-2"> detail</button>
+        </form>
+
+    {% if "backend.change_employee" in permissions %}
+
+       <form method="get" action="{% url 'employee_update' %}">
+        {% csrf_token %}
+        <input type="hidden" name="url" value="{{ i.url }}">
+        <button class="btn btn-info btn-sm mb-2">Update</button>
+       </form>
+
+    {% endif %}
+
+    {% if "backend.delete_employee" in permissions %}
+
+        <form method="post" action="{% url 'employee_delete' %}">
+            {% csrf_token %}
+            <input type="hidden" name="url" value="{{ i.url }}">
+            <button type="submit" class="btn btn-danger btn-sm mb-2">Delete</button>
+        </form>
+    </td>
+    {% endif %}
+
+    </tr>
+
+{% endfor %}
+{% else %}
+<br>
+<p align="center" style="font-size: 30px">
+    No information available.
+</p>
+{% endif %}
+{% endblock %}

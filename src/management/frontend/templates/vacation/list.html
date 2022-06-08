@@ -1,0 +1,68 @@
+{% extends 'layout.html' %}
+
+{% block title %}Vacation{% endblock %}
+
+{% block with_partition_name %}
+<span style="font-family: Arial Black;"><h3>Vacation list</h3></span>
+{% endblock %}
+
+{% block with_button_add %}
+{% if "backend.add_vacation" in permissions %}
+
+    <a href="{% url 'vacation_create' %}" role="button" class="btn btn-success">
+        Add
+    </a>
+
+{% endif %}
+{% endblock %}
+
+{% block with_description %}
+<th align="left" style="font-size: 17pt"><u>First name</u></th>
+<th align="left" style="font-size: 17pt"><u>Second name</u></th>
+<th align="left" style="font-size: 17pt"><u>Start date</u></th>
+<th align="left" style="font-size: 17pt"><u>End date</u></th>
+<th></th>
+{% endblock %}
+
+{% block content %}
+{% if content %}
+{% for i in content %}
+<tr>
+    <td style="font-size: 16pt">{{ i.employee }}</td>
+    <td style="font-size: 16pt">{{ i.employee_second_name }}</td>
+    <td style="font-size: 16pt">{{ i.start_date}}</td>
+    <td style="font-size: 16pt">{{ i.end_date }}</td>
+
+    <td align="center">
+    {% if "backend.change_vacation" in permissions %}
+
+       <form method="get" action="{% url 'vacation_update' %}">
+        {% csrf_token %}
+        <input type="hidden" name="url" value="{{ i.url }}">
+        <input type="hidden" name="start_date" value="{{ i.start_date }}">
+        <input type="hidden" name="end_date" value="{{ i.end_date }}">
+        <button class="btn btn-info btn-sm mb-2">Update</button>
+       </form>
+
+    {% endif %}
+
+    {% if "backend.delete_vacation" in permissions %}
+
+        <form method="post" action="{% url 'vacation_delete' %}">
+            {% csrf_token %}
+            <input type="hidden" name="url" value="{{ i.url }}">
+            <button type="submit" class="btn btn-danger btn-sm mb-2">Delete</button>
+        </form>
+    </td>
+    {% endif %}
+
+    </tr>
+
+{% endfor %}
+{% else %}
+<br>
+<p align="center" style="font-size: 30px">
+    No information available.
+</p>
+{% endif %}
+{% endblock %}
