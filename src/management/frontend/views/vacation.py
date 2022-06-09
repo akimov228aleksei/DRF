@@ -50,7 +50,7 @@ class VacationCreateView(View):
         employees = requests.get(url_employee_list,
                                  headers={'Authorization': f'Token {token}'})
         form = AddVacationForm(
-            employee_list=[(employee.get('id'), f"""{employee.get('first_name')} 
+            employee_list=[(employee.get('id'), f"""{employee.get('first_name')}
                                                     {employee.get('second_name')}""")
                            for employee in employees.json()])
         return render(request, add_template, {'form': form})
@@ -91,7 +91,7 @@ class VacationUpdateView(View):
         employees = requests.get(url_employee_list,
                                  headers={'Authorization': f'Token {token}'})
 
-        form = AddVacationForm(employee_list=[(employee.get('id'), f"""{employee.get('first_name')} 
+        form = AddVacationForm(employee_list=[(employee.get('id'), f"""{employee.get('first_name')}
                                                     {employee.get('second_name')}""")
                                               for employee in employees.json()],
                                data=request.GET)
