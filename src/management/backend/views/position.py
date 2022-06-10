@@ -1,6 +1,7 @@
 from rest_framework.generics import get_object_or_404
 from rest_framework.views import Response
 from rest_framework.viewsets import ViewSet
+from rest_framework import status
 
 from ..models.position import Position
 from ..serializers.position import PositionSerializer, PositionDetailSerializer
@@ -53,6 +54,10 @@ class PositionViewSet(ViewSet):
         """The method deletes a specific entry"""
         queryset = self.get_queryset()
         position = get_object_or_404(queryset, pk=pk)
+        # If employee model has references tp dep. model => abort deletion
+        is_exist = position.employee_set.exists()
+        if is_exist:
+            return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
         serializer = PositionDetailSerializer(instance=position)
         position.delete()
         return Response(serializer.data)

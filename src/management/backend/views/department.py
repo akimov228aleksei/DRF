@@ -1,6 +1,7 @@
 from rest_framework.generics import get_object_or_404
 from rest_framework.views import Response
 from rest_framework.viewsets import ViewSet
+from rest_framework import status
 from ..models.department import Department
 from ..serializers.department import DepartmentSerializer, DepartmentDetailSerializer
 
@@ -45,6 +46,10 @@ class DepartmentViewSet(ViewSet):
         """The method deletes a specific entry"""
         queryset = Department.objects.all()
         department = get_object_or_404(queryset, pk=pk)
+        # If employee model has references tp dep. model => abort deletion
+        is_exist = department.employee_set.exists()
+        if is_exist:
+            return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
         serializer = DepartmentDetailSerializer(instance=department)
         department.delete()
         return Response(serializer.data)

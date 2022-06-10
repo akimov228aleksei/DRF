@@ -1,0 +1,78 @@
+{% extends 'layout.html' %}
+
+{% block title %}Position{% endblock %}
+
+{% block with_partition_name %}
+<span style="font-family: Arial Black;"><h3>Position list</h3></span>
+{% endblock %}
+
+{% block with_button_add %}
+{% if "backend.add_position" in permissions %}
+
+<a href="{% url 'position_create' %}" role="button" class="btn btn-success">
+    Add
+</a>
+
+{% endif %}
+{% endblock %}
+
+{% block with_description %}
+<th align="left" style="font-size: 17pt"><u>Title</u></th>
+<th align="left" style="font-size: 17pt"><u>Is active</u></th>
+<th align="left" style="font-size: 17pt"><u>Max salary</u></th>
+<th align="left" style="font-size: 17pt"><u>Time create</u></th>
+<th></th>
+{% endblock %}
+
+{% block content %}
+{% if content %}
+{% for i in content %}
+<tr>
+    <td style="font-size: 16pt">{{ i.title }}</td>
+    <td style="font-size: 16pt">{{ i.active }}</td>
+    <td style="font-size: 16pt">{{ i.max_salary }}</td>
+    <td style="font-size: 16pt">{{ i.time_create }}</td>
+
+    <td align="center">
+
+        {% if "backend.change_position" in permissions %}
+
+        <form method="get" action="{% url 'position_update' %}">
+            {% csrf_token %}
+            <input type="hidden" name="url" value="{{ i.url }}">
+            <input type="hidden" name="title" value="{{ i.title }}">
+            <input type="hidden" name="max_salary" value="{{ i.max_salary }}">
+            <button class="btn btn-info btn-sm mb-2">Update</button>
+        </form>
+
+        {% endif %}
+
+        {% if "backend.delete_position" in permissions %}
+
+        <form method="post" onSubmit="return confirm('Warning. Do you approve the deletion?');"
+              action="{% url 'position_delete' %}">
+            {% csrf_token %}
+            <input type="hidden" name="url" value="{{ i.url }}">
+            <button type="submit" class="btn btn-danger btn-sm mb-2">Delete</button>
+        </form>
+    </td>
+    {% endif %}
+
+</tr>
+
+{% endfor %}
+
+<div id="window">
+    You cannot delete this position. It has employees!<br>
+    <a href="#" class="close btn btn-primary">Close</a>
+</div>
+
+<a href="#window"></a>
+
+{% else %}
+<br>
+<p align="center" style="font-size: 30px">
+    No information available.
+</p>
+{% endif %}
+{% endblock %}
