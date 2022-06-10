@@ -5,50 +5,53 @@
 <head>
     <meta charset="utf-8">
     <!-- Bootstrap CSS (jsDelivr CDN) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <!-- Bootstrap Bundle JS (jsDelivr CDN) -->
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'css/layout.css' %}" type="text/css">
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
 <div class="scroll-table">
-<table align="center" border="2">
-    <thead>
-    <tr>
-        <th colspan="4">
-        <div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
-            <a href="{% url 'home' %}" role="button" class="btn btn-secondary"><h4>Departments</h4></a>
-            <a href="{% url 'employee_list' %}" role="button" class="btn btn-secondary"><h4>Employees</h4></a>
-            <a href="{% url 'position_list' %}" role="button" class="btn btn-secondary"><h4>Positions</h4></a>
-            <a href="{% url 'vacation_list' %}" role="button" class="btn btn-secondary"><h4>Vacation</h4></a>
-        </div>
-        </th>
-        <th>
-            <form id='logout' style="text-align: right" action="http://127.0.0.1:8000/logout/" method="post">
-                {% csrf_token %}
-                <button class="btn btn-outline-danger" type="submit" form="logout"> Logout</button>
-            </form>
-        </th>
-    </tr>
-    <tr>
-        <th align="right" colspan="4">{% block with_partition_name %}{% endblock %}</th>
-        <th>
-            {% block with_button_add %}{% endblock %}
-        </th>
-    </tr>
-    <tr style="border-bottom: 3px solid black;">{% block with_description %}{% endblock %}
-    </tr>
-    </thead>
+    <table align="center" border="2">
+        <thead>
+        <tr>
+            <th colspan="4">
+                <div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
+                    <a href="{% url 'home' %}" role="button" class="btn btn-secondary"><h4>Departments</h4></a>
+                    <a href="{% url 'employee_list' %}" role="button" class="btn btn-secondary"><h4>Employees</h4></a>
+                    <a href="{% url 'position_list' %}" role="button" class="btn btn-secondary"><h4>Positions</h4></a>
+                    <a href="{% url 'vacation_list' %}" role="button" class="btn btn-secondary"><h4>Vacation</h4></a>
+                </div>
+            </th>
+            <th>
+                <form id='logout' style="text-align: right" action="http://127.0.0.1:8000/logout/" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-outline-danger" type="submit" form="logout"> Logout</button>
+                </form>
+            </th>
+        </tr>
+        <tr>
+            <th align="right" colspan="4">{% block with_partition_name %}{% endblock %}</th>
+            <th>
+                {% block with_button_add %}{% endblock %}
+            </th>
+        </tr>
+        <tr style="border-bottom: 3px solid black;">{% block with_description %}{% endblock %}
+        </tr>
+        </thead>
     </table>
     <div class="scroll-table-body">
-    <table>
-    <tbody>
-    {% block content %}
-    {% endblock %}
-    </tbody>
-    </table>
-</div>
+        <table>
+            <tbody>
+            {% block content %}
+            {% endblock %}
+            </tbody>
+        </table>
+    </div>
 </div>
 </body>
 </html>

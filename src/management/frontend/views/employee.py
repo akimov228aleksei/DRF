@@ -76,8 +76,8 @@ class EmployeeCreateView(View):
 
         # Removing useless arguments
         data = QueryDict(request.body, mutable=True)
-        data.pop('department')
-        data.pop('position')
+        data.pop('department', None)
+        data.pop('position', None)
 
         form = AddEmployeeForm(data)
         # Form validation
@@ -131,8 +131,8 @@ class EmployeeUpdateView(View):
 
         # Removing useless arguments
         data = QueryDict(request.body, mutable=True)
-        data.pop('department')
-        data.pop('position')
+        data.pop('department', None)
+        data.pop('position', None)
 
         # Form validation
         form = AddEmployeeForm(data)

@@ -1,7 +1,8 @@
 from django.http import HttpResponseServerError
-from rest_framework import status
+from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.views.generic import View
+from rest_framework import status
 import requests
 
 from frontend.forms.department.add import AddDepartmentForm
@@ -121,11 +122,12 @@ class DepartmentDeleteView(View):
     @check_token(preview_template)
     def post(self, request, token):
         """Method for deleting department"""
-
-        # Deleting department
         api_request = requests.delete(request.POST['url'],
                                       headers={'Authorization': f'Token {token}'})
         if status.is_success(api_request.status_code):
             return redirect('home')
+        # Display warning window
+        elif api_request.status_code == status.HTTP_405_METHOD_NOT_ALLOWED:
+            return redirect('http://127.0.0.1:8000/#window')
         # If status != success -> raise ServerError
         return HttpResponseServerError()

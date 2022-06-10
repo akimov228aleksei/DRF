@@ -9,9 +9,9 @@
 {% block with_button_add %}
 {% if "backend.add_position" in permissions %}
 
-    <a href="{% url 'position_create' %}" role="button" class="btn btn-success">
-        Add
-    </a>
+<a href="{% url 'position_create' %}" role="button" class="btn btn-success">
+    Add
+</a>
 
 {% endif %}
 {% endblock %}
@@ -35,21 +35,22 @@
 
     <td align="center">
 
-    {% if "backend.change_position" in permissions %}
+        {% if "backend.change_position" in permissions %}
 
-       <form method="get" action="{% url 'position_update' %}">
-        {% csrf_token %}
-        <input type="hidden" name="url" value="{{ i.url }}">
-        <input type="hidden" name="title" value="{{ i.title }}">
-        <input type="hidden" name="max_salary" value="{{ i.max_salary }}">
-        <button class="btn btn-info btn-sm mb-2">Update</button>
-       </form>
+        <form method="get" action="{% url 'position_update' %}">
+            {% csrf_token %}
+            <input type="hidden" name="url" value="{{ i.url }}">
+            <input type="hidden" name="title" value="{{ i.title }}">
+            <input type="hidden" name="max_salary" value="{{ i.max_salary }}">
+            <button class="btn btn-info btn-sm mb-2">Update</button>
+        </form>
 
-    {% endif %}
+        {% endif %}
 
-    {% if "backend.delete_position" in permissions %}
+        {% if "backend.delete_position" in permissions %}
 
-        <form method="post" action="{% url 'position_delete' %}">
+        <form method="post" onSubmit="return confirm('Warning. Do you approve the deletion?');"
+              action="{% url 'position_delete' %}">
             {% csrf_token %}
             <input type="hidden" name="url" value="{{ i.url }}">
             <button type="submit" class="btn btn-danger btn-sm mb-2">Delete</button>
@@ -57,9 +58,17 @@
     </td>
     {% endif %}
 
-    </tr>
+</tr>
 
 {% endfor %}
+
+<div id="window">
+    You cannot delete this position. It has employees!<br>
+    <a href="#" class="close btn btn-primary">Close</a>
+</div>
+
+<a href="#window"></a>
+
 {% else %}
 <br>
 <p align="center" style="font-size: 30px">

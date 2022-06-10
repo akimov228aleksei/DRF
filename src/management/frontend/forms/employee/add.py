@@ -17,7 +17,7 @@ class AddEmployeeForm(forms.Form):
         attrs={'class': 'form-control form-control-lg'}))
     position = forms.ChoiceField(required=False, widget=forms.Select(
         attrs={'class': 'form-control form-control-lg'}))
-    salary = forms.IntegerField(min_value=0, widget=forms.NumberInput(
+    salary = forms.IntegerField(min_value=0, max_value=100000, widget=forms.NumberInput(
         attrs={'class': 'form-control form-control-lg',
                "placeholder": "Enter salary"}))
     on_boarding_day = forms.DateField(widget=forms.TextInput(attrs={

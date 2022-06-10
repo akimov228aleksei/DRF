@@ -51,7 +51,7 @@
 
     {% if "backend.delete_employee" in permissions %}
 
-        <form method="post" action="{% url 'employee_delete' %}">
+        <form method="post" onSubmit="return confirm('Warning. Do you approve the deletion?');" action="{% url 'employee_delete' %}">
             {% csrf_token %}
             <input type="hidden" name="url" value="{{ i.url }}">
             <button type="submit" class="btn btn-danger btn-sm mb-2">Delete</button>

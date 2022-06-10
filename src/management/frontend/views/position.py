@@ -124,5 +124,8 @@ class PositionDeleteView(View):
                                       headers={'Authorization': f'Token {token}'})
         if status.is_success(api_request.status_code):
             return redirect('position_list')
+        # Display warning window
+        elif api_request.status_code == status.HTTP_405_METHOD_NOT_ALLOWED:
+            return redirect('http://127.0.0.1:8000/position/list#window')
         # If status != success -> raise ServerError
         return HttpResponseServerError()
