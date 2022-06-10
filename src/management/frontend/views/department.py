@@ -1,5 +1,4 @@
 from django.http import HttpResponseServerError
-from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.views.generic import View
 from rest_framework import status
